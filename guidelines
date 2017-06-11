@@ -1,1 +1,23 @@
 main guidlines here:
+01)----------------------------------------------------------------------------------------
+1st you have to create web server in your computer
+carefully follow instructions in following link...
+
+https://www.znetlive.com/blog/how-to-install-apache-php-and-mysql-on-windows-10-machine/
+
+after sucessfull installation browse to htdocs folder in "c/apache2_4"
+
+open there admin cmd and confirm you are in the folder.
+
+type following commands:
+	git config --global user.email "you@example.com"
+
+	git config --global user.name "Your Name"
+
+	git clone https://github.com/nilankamanoj/project_sasip
+	
+	go in to the folder 
+	
+	git init
+-------------------------------------------------------------------------------------------
+	
