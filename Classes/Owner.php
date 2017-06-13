@@ -23,6 +23,10 @@ class Owner
    }
    return(self::$instance);
  }
+ public function getName()
+ {
+   return("Owner");
+ }
 }
 
 

@@ -1,10 +1,11 @@
 <?php
-
+	//
+	require("Owner.php");
 	require_once("session.php");
 
 	require_once("class.user.php");
 	$auth_user = new USER();
-
+	$SystemUser=Null;
 
 	$user_id = $_SESSION['user_session'];
 
@@ -13,6 +14,10 @@
 
 	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 	//get_template_part('home','1');
+	if ($userRow['user_level']=='1')
+	{
+		$SystemUser=Owner::getInstance();
+	}
 
 
 ?>
@@ -97,6 +102,7 @@ if ($userRow['user_level']=='2') { ?>
 
 
 <?php } ?>
+<?php print($SystemUser->getName()); ?>
 
 
 
