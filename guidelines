@@ -1,5 +1,5 @@
 main guidlines here:
-01)----------------------------------------------------------------------------------------
+01)=----------------------------------------------------------------------------------------
 1st you have to create web server in your computer
 carefully follow instructions in following link...
 
@@ -15,9 +15,8 @@ type following commands:
 	git config --global user.name "Your Name"
 
 	git clone https://github.com/nilankamanoj/project_sasip
-	
-	go in to the folder 
-	
+
+	go in to the folder
+
 	git init
 -------------------------------------------------------------------------------------------
-	
