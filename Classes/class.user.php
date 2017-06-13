@@ -11,7 +11,7 @@ class USER
 	public function __construct()
 	{
 		$database = new Database();
-		$db = $database->dbConnection();
+		$db = $database->dbConnection("dblogin");
 		$this->conn = $db;
     }
 

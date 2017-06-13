@@ -2,18 +2,18 @@
 class Database
 {
     private $host = "localhost";
-    private $db_name = "dblogin";
+    //private $db_name = "dblogin";
     private $username = "newuser";
     private $password = "password";
     public $conn;
 
-    public function dbConnection()
+    public function dbConnection($db_name)
 	{
 
 	    $this->conn = null;
         try
 		{
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $db_name, $this->username, $this->password);
 			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
 		catch(PDOException $exception)

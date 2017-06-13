@@ -34,6 +34,7 @@
 
 <body>
 
+
 <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -47,10 +48,26 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="">Option1</a></li>
-            <li><a href="">Option2</a></li>
-            <li><a href="">Option3</a></li>
+            <li class="active"><a href="home.php">Home</a></li>
+            <li><a href="profile.php">Profile</a></li>
+						<?php
+
+						if ($userRow['user_level']=='2') { ?>
+							<li><a href="sign-up.php">Add user</a></li>
+						<?php } ?>
+						<?php
+
+						if ($userRow['user_level']=='2') { ?>
+							<li><a href="addStudent.php">Add Student</a></li>
+						<?php } ?>
+
+						<?php
+
+						if ($userRow['user_level']=='3') { ?>
+							<li><a href="addStudent.php">Add Student</a></li>
+						<?php } ?>
           </ul>
+
           <ul class="nav navbar-nav navbar-right">
 
             <li class="dropdown">
@@ -66,11 +83,9 @@
       </div>
     </nav>
 
+	<div class="clearfix"></div>
 
-    <div class="clearfix"></div>
-
-
-<div class="container-fluid" style="margin-top:80px;">
+    <div class="container-fluid" style="margin-top:80px;">
 
     <div class="container">
 
@@ -80,40 +95,37 @@
         <h1>
         <a href="home.php"><span class="glyphicon glyphicon-home"></span> home</a> &nbsp;
         <a href="profile.php"><span class="glyphicon glyphicon-user"></span> profile</a></h1>
-       	<hr />
+        <hr />
 
-        <p class="h4">User Home Page</p>
-				<p class="h4">level <?php print($userRow['user_level']); ?> user</p>
+        <p class="h4">content here</p>
+				<?php
 
-<?php
+				if ($userRow['user_level']=='1') { ?>
 
-if ($userRow['user_level']=='1') { ?>
-
-  <p>content for user1</p>
+				  <p>content for user1</p>
 
 
-<?php } ?>
-<?php
+				<?php } ?>
+				<?php
 
-if ($userRow['user_level']=='2') { ?>
+				if ($userRow['user_level']=='2') { ?>
 
-  <p>content for user2</p>
-	<a href="sign-up.php">add user</a></h1>
-
-
-<?php } ?>
-<?php print($SystemUser->getName()); ?>
+				  <p>content for user2</p>
 
 
+				<?php } ?>
 
     <p class="blockquote-reverse" style="margin-top:200px;">
-    some foooter here<br /><br />
+    some footer here<br /><br />
     <a href="">Option4</a>
     </p>
 
     </div>
 
 </div>
+
+
+
 
 <script src="bootstrap/js/bootstrap.min.js"></script>
 
