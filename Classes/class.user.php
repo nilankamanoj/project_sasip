@@ -6,14 +6,16 @@ class USER
 {
 
 	private $conn;
-
+	private $u__name="default";
 
 	public function __construct()
 	{
 		$database = new Database();
 		$db = $database->dbConnection("dblogin");
 		$this->conn = $db;
+
     }
+
 
 	public function runQuery($sql)
 	{
@@ -101,6 +103,7 @@ class USER
 		unset($_SESSION['user_session']);
 		return true;
 	}
+
 
 
 }

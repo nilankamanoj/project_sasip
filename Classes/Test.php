@@ -1,14 +1,8 @@
 <?php
-require('Owner.php');
-echo "ok1";
+require 'Owner.php';
 $SystemUser=Owner::getInstance();
+echo "pass1";
+$SystemUser->DeleteUser('user4');
 echo "pass2";
-if($SystemUser->hasNewUsers()){
-  echo "has";
-}
-else {
-  echo "no";
-}
 
-
-?>
+ ?>

@@ -103,26 +103,22 @@
         <a href="profile.php"><span class="glyphicon glyphicon-user"></span> profile</a></h1>
         <hr />
 
-        <p class="h4">content here</p>
-				<?php
+        <p class="h4">Notifications Here</p>
+				<br></br>
 
-				if ($userRow['user_level']=='1') { ?>
-
-				  <p>content for user1</p>
-
-
-
-				<?php } ?>
 
  <?php
 
  if ($userRow['user_level']=='1') {
 if($SystemUser->hasNewUsers()){?>
-	<p>New Users Added</p>
-	<a href="acceptUser.php">Checkout Now</a>
+	<p><font color=#ff0000>New Users Added : </font><a href="acceptUser.php">Checkout Now</a></p>
+
 <?php
-}
-} ?>
+}}?>
+
+
+
+
 <?php
 
 				if ($userRow['user_level']=='2') { ?>
