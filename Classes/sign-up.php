@@ -114,6 +114,7 @@ if(isset($_POST['btn-signup']))
 	          <ul class="nav navbar-nav navbar-right">
 
 	            <li class="dropdown">
+								<?php  ?>
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 				  <span class="glyphicon glyphicon-user"></span>&nbsp;Hi' <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
 	              <ul class="dropdown-menu">

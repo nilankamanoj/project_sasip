@@ -65,6 +65,11 @@ if ($userRow['user_level']=='1')
 						if ($userRow['user_level']=='3') { ?>
 							<li><a href="addStudent.php">Add Student</a></li>
 						<?php } ?>
+						<?php
+
+						if ($userRow['user_level']=='1') { ?>
+							<li><a href="acceptUser.php">Accept User</a></li>
+						<?php } ?>
 
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -73,6 +78,7 @@ if ($userRow['user_level']=='1')
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 			  <span class="glyphicon glyphicon-user"></span>&nbsp;Hi' <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
+
                 <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
                 <li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
               </ul>

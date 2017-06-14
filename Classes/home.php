@@ -66,6 +66,12 @@
 						if ($userRow['user_level']=='3') { ?>
 							<li><a href="addStudent.php">Add Student</a></li>
 						<?php } ?>
+						<?php
+
+						if ($userRow['user_level']=='1') { ?>
+							<li><a href="acceptUser.php">Accept User</a></li>
+						<?php } ?>
+
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
@@ -105,8 +111,19 @@
 				  <p>content for user1</p>
 
 
+
 				<?php } ?>
-				<?php
+
+ <?php
+
+ if ($userRow['user_level']=='1') {
+if($SystemUser->hasNewUsers()){?>
+	<p>New Users Added</p>
+	<a href="acceptUser.php">Checkout Now</a>
+<?php
+}
+} ?>
+<?php
 
 				if ($userRow['user_level']=='2') { ?>
 
