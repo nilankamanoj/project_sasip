@@ -70,6 +70,7 @@
 
 						if ($userRow['user_level']=='1') { ?>
 							<li><a href="acceptUser.php">Accept User</a></li>
+							<li><a href="freeCard.php">Offer Free Card</a></li>
 						<?php } ?>
 
           </ul>

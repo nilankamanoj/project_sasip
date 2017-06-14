@@ -2,10 +2,13 @@
 	require("Owner.php");
 	require_once("session.php");
 
+  require 'class.student.php';
+
 	require_once("class.user.php");
 	$auth_user = new USER();
   $SystemUser=Null;
 
+  $final_id="";
 
 	$user_id = $_SESSION['user_session'];
 
@@ -23,28 +26,48 @@ else if ($userRow['user_level']=='1')
 		$SystemUser=Owner::getInstance();
     echo "pass";
 	}
-	if($SystemUser->hasNewUsers()){
-	  $newUsers=$SystemUser->getNewUsers();
-	}
-	$num=0;
 	if(isset($_POST['btn-signup']))
 	{
+    $idno = strip_tags($_POST['txt_idno']);
 
-	  $user_name=$newUsers[$num]['user_name'];
-	  $SystemUser->AcceptUser($user_name);
-		$auth_user->redirect('acceptUser.php?joined');
+    if($idno=="")	{
+      $error[] = "provide student id !";
+    }
+    else if(strlen($idno)!=6)	{
+      $error[] = "provide valid student id !";
+    }
+    else if(ctype_digit($idno)=="")	{
+      $error[] = "provide valid student id !";
+    }
+    else {
+      $stu=new Student();
+
+      $row= $stu->fetchStudent($idno);
+
+      if($row['identity_no']!=$idno) {
+        $error[] = "sorry identity invalid id !";
+      }
+      else {
+        $final_id=$idno;
+      }
+
+
+    }
 
 
 	}
-	if(isset($_POST['btn-delete']))
+	if(isset($_POST['btn-confirm']))
 	{
-
-		$user_name=$newUsers[$num]['user_name'];
-		$SystemUser->DeleteUser($user_name);
-		$auth_user->redirect('acceptUser.php');
-
-
+    $stu=new Student();
+    $stu->makeFree();
+    $auth_user->redirect('freeCard.php?joined');
 	}
+  if(isset($_POST['btn-another']))
+  {
+
+    $auth_user->redirect('freeCard.php');
+  }
+
 
 	?>
 
@@ -53,7 +76,7 @@ else if ($userRow['user_level']=='1')
 	      <html xmlns="http://www.w3.org/1999/xhtml">
 	      <head>
 	      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	      <title>Accept User</title>
+	      <title>Offer Free Card</title>
 	      <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	      <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 	      <link rel="stylesheet" href="style.css" type="text/css"  />
@@ -74,8 +97,13 @@ else if ($userRow['user_level']=='1')
 	      	          <ul class="nav navbar-nav">
 	      	            <li><a href="home.php">Home</a></li>
 	      	            <li><a href="profile.php">Profile</a></li>
-	                    <li class="active"><a href="acceptUser.php">Accept User</a></li>
-											<li><a href="freeCard.php">Offer Free Card</a></li>
+
+                      <?php
+                      if ($userRow['user_level']=='1') { ?>
+          							<li><a href="acceptUser.php">Accept User</a></li>
+          						<?php } ?>
+
+	                    <li class="active"><a href="freeCard.php">Offer Free Card</a></li>
 
 
 	      	          </ul>
@@ -99,7 +127,8 @@ else if ($userRow['user_level']=='1')
 	      <div class="container">
 
 	              <form method="post" class="form-signin">
-	                  <h2 class="form-signin-heading">Accept User</h2><hr />
+<?php if($final_id==""){?>
+	                  <h2 class="form-signin-heading">Select Student</h2><hr />
 	                  <?php
 	      			if(isset($error))
 	      			{
@@ -116,48 +145,51 @@ else if ($userRow['user_level']=='1')
 	      			{
 	      				 ?>
 	                       <div class="alert alert-info">
-	                            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully Accepted <a href='index.php'>Go back</a> 
+	                            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Free Card Offered !<a href='index.php'>Go back</a> 
 	                       </div>
 	                       <?php
-	      			}
+	      			}?>
+              <div class="form-group">
+
+              <input type="text" class="form-control" name="txt_idno" placeholder="Enter Id Number" value="<?php if(isset($error)){echo $idno;}?>" />
+              </div>
+              <div class="clearfix"></div><hr />
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" name="btn-signup">
+                    <i class="glyphicon glyphicon-open-file"></i>&nbsp;Check Student
+                  </button>
+              </div>
+              <br />
+<?php }else{ ?>
+  <h2 class="form-signin-heading">Offer Free Card</h2><hr />
+
+  <div class="form-group">
+  <li><font color =#ooooff size=4>Name :</font><?php print($row['first_name']);print("  ");print($row['last_name'])?></li>
+  <li><font color =#ooooff size=4>Id number:</font><?php print($row['identity_no']); ?></li>
+  <li><font color =#ooooff size=4>School:</font><?php print($row['school_name']); ?></li>
 
 
-	$arrlength = count($newUsers);
-	if($arrlength!=0){
+  <div class="clearfix"></div><hr />
+  <div class="form-group">
+  <button  type="submit" class="btn btn-primary" name="btn-confirm">
+  <i class="glyphicon glyphicon-open-file"></i>&nbsp;Offer free card
+  </button>
+  <button  type="submit" background-color=#ffff00 name="btn-another">
+  <i class=""></i>&nbsp;Search Again
+  </button>
+  </div>
+  <br />
 
+<?php } ?>
+              <label>want to cancel! <a href="index.php">Cancel</a></label>
+          </form>
+         </div>
 
-	?>
-	      <div class="form-group">
-	      <li><font color =#ooooff size=4>Name :</font><?php print($newUsers[$num]['user_name']); ?></li>
-	      <li><font color =#ooooff size=4>Email:</font><?php print($newUsers[$num]['user_email']); ?></li>
-	      <li><font color =#ooooff size=4>Level:</font><?php print($newUsers[$num]['user_level']); ?></li>
-	      <?php $user_name=$newUsers[$num]['user_name']; ?>
-
-
-
-	      <div class="clearfix"></div><hr />
-	      <div class="form-group">
-	        <button  type="submit" class="btn btn-primary" name="btn-signup">
-	            <i class="glyphicon glyphicon-open-file"></i>&nbsp;Confirm User
-	          </button>
-						<button  type="submit" background-color=#ffff00 name="btn-delete">
-		            <i class=""></i>&nbsp;Delete User
-		          </button>
 	      </div>
-	      <br />
-	      <label>want to cancel! <a href="index.php">Cancel</a></label>
-	  </form>
-	 </div>
-	 <?php }
-	 else { ?>
-	 	<label>No New Users           <a href="index.php">Go Back</a></label>
-	 <?php } ?>
 
 
 
-	      </div>
 
-	      </div>
 
 	      </body>
 	      </html>

@@ -52,9 +52,26 @@ class Student
 		{
 			echo $e->getMessage();
 		}
+
 	}
 
+public function fetchStudent($idno)
+{
 
+	$stmt1=$this->conn->query("SELECT  identity_no,first_name,last_name,phone_number,school_name,added_by FROM students WHERE identity_no ='{$idno}'");
+	$this->conn->query("INSERT INTO pointers(student_id) VALUES('{$idno}')");
+	$row = $stmt1->fetch(PDO::FETCH_ASSOC);
+
+	return($row);
+}
+
+public function makeFree()
+{
+	$stmt1=$this->conn->query("SELECT student_id FROM pointers ORDER by id DESC LIMIT 1");
+	$row1=$stmt1->fetch(PDO::FETCH_ASSOC);
+	$idno=$row1['student_id'];
+$this->conn->query("UPDATE students SET free = '1' WHERE identity_no='{$idno}'");
+}
 
 
 }
