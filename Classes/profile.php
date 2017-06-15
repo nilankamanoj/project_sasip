@@ -73,6 +73,12 @@ if ($userRow['user_level']=='1')
 							<li ><a href="freeCard.php">Offer Free Card</a></li>
 						<?php } ?>
 
+						<?php
+						if ($userRow['user_level']=='2') { ?>
+							<li><a href="addClass.php">Add Class</a></li>
+							<?php } ?>
+
+
           </ul>
           <ul class="nav navbar-nav navbar-right">
 

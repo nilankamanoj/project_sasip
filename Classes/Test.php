@@ -1,17 +1,18 @@
-<h2 class="form-signin-heading">Offer Free Card</h2><hr />
+<?php
+require 'class.class.php';
 
-<div class="form-group">
-<li><font color =#ooooff size=4>Name :</font><?php print($row['first_name']);print("  ");print($row['last_name'])?></li>
-<li><font color =#ooooff size=4>Id number:</font><?php print($row['identity_no']); ?></li>
-<li><font color =#ooooff size=4>School:</font><?php print($row['school_name']); ?></li>
+$cls=new Classs();
+$row=$cls->fetchClass('phy16');
 
-<div class="clearfix"></div><hr />
-<div class="form-group">
-<button  type="submit" class="btn btn-primary" name="btn-confirm">
-<i class="glyphicon glyphicon-open-file"></i>&nbsp;Offer free card
-</button>
-<button  type="submit" background-color=#ffff00 name="btn-another">
-<i class=""></i>&nbsp;Search Again
-</button>
-</div>
-<br />
+echo $row['class_name'];
+echo $row['teacher_name'];
+//$cls->createClass('phy16','mon','7','30','4','amith');
+//echo "pass";
+//echo $cls->checkClass('phy18');
+
+
+
+
+
+
+ ?>

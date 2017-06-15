@@ -43,7 +43,19 @@ CREATE TABLE IF NOT EXISTS `pointers` (
   `student_id` varchar(6) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
+CREATE TABLE IF NOT EXISTS `classes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_name` varchar(12) NOT NULL,
+  `class_day` varchar(12) NOT NULL,
+  `class_time_hour` varchar(2) NOT NULL,
+  `class_time_minit` varchar(2) NOT NULL,
+  `duration` varchar(2) NOT NULL,
+  `teacher_name` varchar(12) NOT NULL,
+  `stu_count` INT(4) NOT NULL,
+  `hall` varchar(8),
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+id,class_name,class_day,class_time_hour,class_time_minit,teacher_name,stu_count,hall
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

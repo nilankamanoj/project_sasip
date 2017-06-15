@@ -102,11 +102,8 @@ if(isset($_POST['btn-signup']))
 
 							if ($userRow['user_level']=='2') { ?>
 								<li class="active"><a href="sign-up.php">Add user</a></li>
-							<?php } ?>
-							<?php
-
-							if ($userRow['user_level']=='2') { ?>
 								<li><a href="addStudent.php">Add Student</a></li>
+								<li><a href="addClass.php">Add Class</a></li>
 							<?php } ?>
 
 
