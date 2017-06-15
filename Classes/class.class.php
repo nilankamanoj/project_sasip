@@ -93,5 +93,14 @@ $this->conn->query($sql);
 		$row = $stmt1->fetch(PDO::FETCH_ASSOC);
 		return($row);
 		}
+	public function setHall($name,$hall)
+	{
+		$this->conn->query("UPDATE classes SET hall='{$hall}' WHERE class_name='{$name}'");
+	}
+	public function deleteClass($name)
+	{
+		$this->conn->query("DELETE FROM classes  WHERE class_name = '{$name}' ");
+		$this->conn->query("DROP TABLE $name");
+	}
 }
 ?>

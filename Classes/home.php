@@ -71,6 +71,14 @@
 						if ($userRow['user_level']=='1') { ?>
 							<li><a href="acceptUser.php">Accept User</a></li>
 							<li><a href="freeCard.php">Offer Free Card</a></li>
+							<li ><a href="selectHall.php">Book A Hall</a></li>
+						<?php } ?>
+						<?php
+
+						if ($userRow['user_level']=='4') { ?>
+
+							<li><a href="freeCard.php">Offer Free Card</a></li>
+							<li ><a href="selectHall.php">Book A Hall</a></li>
 						<?php } ?>
 
 						<?php

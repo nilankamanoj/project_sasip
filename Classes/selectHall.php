@@ -13,7 +13,11 @@ $auth_stmt->execute(array(":user_id"=>$auth_user_id));
 
 $userRow=$auth_stmt->fetch(PDO::FETCH_ASSOC);
 if ($userRow['user_level']!='2') {
+	if ($userRow['user_level']!='4') {
+		if ($userRow['user_level']!='1') {
 	$auth_user->redirect('home.php');
+}
+}
 }
 if ($userRow['user_level']=='2') {
 	if($clsname=="") {
@@ -28,10 +32,42 @@ $user = new USER();
 $row=$cls->fetchClass($clsname);
 if(isset($_POST['btn-delete']))
 {
-  //echo "<td><a onClick=\"javascript: return confirm('Please confirm deletion');\" href='delete.php?id=".$query2['id']."'>x</a></td><tr>";
+  $cls->deleteClass($clsname);
   $_SESSION['class_name']="";
   $clsname="";
+  $auth_user->redirect("addClass.php?cancelled");
+}
+if(isset($_POST['btn-check']))
+{
+	$hall=$_POST['hall'];
+	if($hall=="NO"){
+		$error[] = "provide hall !";
+	}
+	else{
+
+  $cls->setHall($clsname,$hall);
+  $_SESSION['class_name']="";
+  $clsname="";
+  $auth_user->redirect("addClass.php?joined");
+}
+}
+if(isset($_POST['btn-cancel']))
+{
   $auth_user->redirect("home.php");
+}
+if(isset($_POST['btn-book']))
+{
+	$hall=$_POST['hall'];
+	$cls_name=$_POST['cls_name'];
+
+	if($cls_name=="NO"){
+		$error[] = "select class !";
+	}
+	else if($hall=="NO"){
+		$error[] = "provide hall !";
+	}
+
+
 }
 
 ?>
@@ -71,6 +107,21 @@ if(isset($_POST['btn-delete']))
 							if ($userRow['user_level']=='2') { ?>
 								<li><a href="addStudent.php">Add Student</a></li>
                 <li class="active"><a href="addClass.php">Add Class</a></li>
+							<?php } ?>
+							<?php
+
+							if ($userRow['user_level']=='1') { ?>
+								<li><a href="acceptUser.php">Accept User</a></li>
+								<li ><a href="freeCard.php">Offer Free Card</a></li>
+								<li class="active"><a href="selectHall.php">Book A Hall</a></li>
+							<?php } ?>
+
+							<?php
+
+							if ($userRow['user_level']=='4') { ?>
+
+								<li><a href="freeCard.php">Offer Free Card</a></li>
+								<li class='active'><a href="selectHall.php">Book A Hall</a></li>
 							<?php } ?>
 
 
@@ -121,7 +172,97 @@ if(isset($_POST['btn-delete']))
                  <?php
 			}
 			?>
+			<?php
+
+			if ($userRow['user_level']!='2') { ?>
+				<div class="form-group">
+	        <select name="cls_name">
+	        <option value="NO">Chose The Class</option>
+	        <option value="">cls1</option>
+	        <option value="">cls2</option>
+	        <option value="">cls3</option>
+	        <option value="">cls4</option>
+
+
+
+
+	        </select><br>
+					</div>
+					<div class="form-group">
+						<select name="date">
+						<option value="NO">Date</option>
+						<option value="0">0</option>
+						<option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+						<option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+						<option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option>
+						<option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>
+						<option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option>
+						<option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option>
+						<option value="31">31</option>
+
+
+
+					</select>
+					<select name="month">
+					<option value="NO">Month</option>
+					<option value="1">jan</option>
+					<option value="2">feb</option>
+					<option value="3">mar</option>
+					<option value="4">aprl</option>
+					<option value="5">may</option>
+					<option value="6">june</option>
+					<option value="7">july</option>
+					<option value="8">aug</option>
+					<option value="9">sep</option>
+					<option value="10">oct</option>
+					<option value="11">nov</option>
+					<option value="13">dec</option>
+
+				</select>
+				<br>
+
+
+					</div>
+					<div class="form-group">
+						<select name="hour">
+						<option value="NO">Select Hour</option>
+						<option value="6">06</option>
+						<option value="7">07</option>
+						<option value="8">08</option>
+						<option value="9">09</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
+						<option value="17">17</option>
+						<option value="18">18</option>
+						<option value="19">19</option>
+						<option value="20">20</option>
+						</select>
+						<select name="minit">
+						<option value="NO">Select Minutes</option>
+						<option value="0">00</option>
+						<option value="30">30</option>
+
+					</select>
+					<select name="duration">
+					<option value="NO">Select Duration</option>
+					<option value="1">01</option>
+					<option value="2">02</option>
+					<option value="3">03</option>
+					<option value="4">04</option>
+					<option value="5">05</option>
+
+				</select><br>
+
+				</div>
+
+			<?php } else{?>
       <p><font color=#505fff >Class Name :</font> <?php print($row['class_name']) ;?></p>
+			<?php } ?>
       <br>
       <div class="form-group">
         <select name="hall">
@@ -135,20 +276,26 @@ if(isset($_POST['btn-delete']))
         <option value="23">level-2-c</option>
 
 
-n>
+
         </select><br>
 
       </div>
+			<?php if($clsname=="") {?>
       <div class="clearfix"></div><hr />
       <div class="form-group">
-        <button type="submit" class="btn btn-primary" name="btn-check">
-            <i class="glyphicon glyphicon-open-file"></i>&nbsp;Proceed
+        <button type="submit" class="btn btn-primary" name="btn-book">
+            <i class="glyphicon glyphicon-open-file"></i>&nbsp;Check Availability
           </button>
-          <?php if($clsname=="") {?>
+
           <button type="submit" class="" name="btn-cancel">
 
               <i class="glyphicon glyphicon-open-file"></i>&nbsp;Cancell Booking
               <?php }else{ ?>
+								<div class="clearfix"></div><hr />
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary" name="btn-check">
+											<i class="glyphicon glyphicon-open-file"></i>&nbsp;Proceed
+										</button>
                 <button type="submit" class="" name="btn-delete">
                 <i class="glyphicon glyphicon-open-file"></i>&nbsp;Cancell New Creation
                 <?php } ?>

@@ -19,7 +19,10 @@
 
 if ($userRow['user_level']!='1')
 	{
+		if ($userRow['user_level']!='4')
+			{
 		$auth_user->redirect('home.php');
+	}
 	}
 else if ($userRow['user_level']=='1')
 	{
@@ -104,6 +107,7 @@ else if ($userRow['user_level']=='1')
           						<?php } ?>
 
 	                    <li class="active"><a href="freeCard.php">Offer Free Card</a></li>
+											<li ><a href="selectHall.php">Book A Hall</a></li>
 
 
 	      	          </ul>
@@ -145,7 +149,7 @@ else if ($userRow['user_level']=='1')
 	      			{
 	      				 ?>
 	                       <div class="alert alert-info">
-	                            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Free Card Offered !<a href='index.php'>Go back</a> 
+	                            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Free Card Offered !<a href='index.php'>Go back</a>
 	                       </div>
 	                       <?php
 	      			}?>

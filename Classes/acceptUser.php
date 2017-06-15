@@ -76,6 +76,7 @@ else if ($userRow['user_level']=='1')
 	      	            <li><a href="profile.php">Profile</a></li>
 	                    <li class="active"><a href="acceptUser.php">Accept User</a></li>
 											<li><a href="freeCard.php">Offer Free Card</a></li>
+											<li ><a href="selectHall.php">Book A Hall</a></li>
 
 
 	      	          </ul>
@@ -116,7 +117,7 @@ else if ($userRow['user_level']=='1')
 	      			{
 	      				 ?>
 	                       <div class="alert alert-info">
-	                            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully Accepted <a href='index.php'>Go back</a> 
+	                            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully Accepted <a href='index.php'>Go back</a>
 	                       </div>
 	                       <?php
 	      			}
@@ -128,9 +129,25 @@ else if ($userRow['user_level']=='1')
 
 	?>
 	      <div class="form-group">
+					<?php
+					$occupation="";
+					$ulvl=$newUsers[$num]['user_level'];
+					if($ulvl=='2'){
+						$occupation='Staff Upper';
+					}
+					else if($ulvl=='3'){
+						$occupation='Staff Lower';
+					}
+					else if($ulvl=='4'){
+						$occupation='Teacher';
+					}
+					else if($ulvl=='5'){
+						$occupation='Card Marker';
+					}
+					 ?>
 	      <li><font color =#ooooff size=4>Name :</font><?php print($newUsers[$num]['user_name']); ?></li>
 	      <li><font color =#ooooff size=4>Email:</font><?php print($newUsers[$num]['user_email']); ?></li>
-	      <li><font color =#ooooff size=4>Level:</font><?php print($newUsers[$num]['user_level']); ?></li>
+	      <li><font color =#ooooff size=4>Level:</font><?php print($occupation); ?></li>
 	      <?php $user_name=$newUsers[$num]['user_name']; ?>
 
 

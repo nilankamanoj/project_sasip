@@ -23,7 +23,7 @@ if(isset($_POST['btn-signup']))
 	$uname = strip_tags($_POST['txt_uname']);
 	$umail = strip_tags($_POST['txt_umail']);
 	$upass = strip_tags($_POST['txt_upass']);
-	$ulevel = strip_tags($_POST['int_ulevel']);
+	$ulevel = $_POST['int_ulevel'];
 
 	if($uname=="")	{
 		$error[] = "provide username !";
@@ -31,8 +31,8 @@ if(isset($_POST['btn-signup']))
 	else if($umail=="")	{
 		$error[] = "provide email id !";
 	}
-	else if($ulevel=="")	{
-		$error[] = "provide user level !";
+	else if($ulevel=="NO")	{
+		$error[] = "provide user Occupation !";
 	}
 	else if(!filter_var($umail, FILTER_VALIDATE_EMAIL))	{
 	    $error[] = 'Please enter a valid email address !';
@@ -157,7 +157,15 @@ if(isset($_POST['btn-signup']))
             <input type="text" class="form-control" name="txt_umail" placeholder="Enter E-Mail ID" value="<?php if(isset($error)){echo $umail;}?>" />
             </div>
 						<div class="form-group">
-            <input type="text" class="form-control" name="int_ulevel" placeholder="Enter User Level" value="<?php if(isset($error)){echo $ulevel;}?>" />
+							<div class="form-group">
+								<select name="int_ulevel">
+								<option value="NO">Chose Occupation</option>
+								<option value="2">Staff Upper</option>
+								<option value="3">Staff Lower</option>
+								<option value="4">Teacher</option>
+								<option value="5">Card Marker</option>
+
+								</select><br>
             </div>
             <div class="form-group">
             	<input type="password" class="form-control" name="txt_upass" placeholder="Enter Password" />

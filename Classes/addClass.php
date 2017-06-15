@@ -148,8 +148,18 @@ if(isset($_POST['btn-signup']))
                       <i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully added class<a href='index.php'>Go back</a>
                  </div>
                  <?php
-			}
-			?>
+			}?>
+			<?php
+			if(isset($_GET['cancelled']))
+			{
+				 ?>
+                 <div class="alert alert-danger">
+                      <i class="glyphicon glyphicon-log-in"></i> &nbsp; Cancelled Operation !<a href='index.php'>Go back</a>
+                 </div>
+                 <?php
+			}?>
+
+
 <?php if($clz=="") {?>
             <div class="form-group">
             <input type="text" class="form-control" name="txt_name" placeholder="Enter Class Name" value="<?php if(isset($error)){echo $name;}?>" />
