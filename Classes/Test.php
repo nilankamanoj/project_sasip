@@ -1,17 +1,20 @@
+<html>
+<body>
+<select name="teachers">
+<<option value="NO">Select teacher</option>
 <?php
-require 'class.class.php';
+require 'dbconfig.php';
+$db=new Database();
+$conn=$db-> dbConnection('dblogin');
+$result = $conn->prepare("SELECT user_name FROM users WHERE user_level='1' OR user_level='4'");
+$result->execute();
+$array = $result->fetchAll(PDO::FETCH_COLUMN);
+foreach ($array as &$user_name) {
+  echo "<option value=".$user_name.">".$user_name."</option>";
+}
 
-$cls=new Classs();
-$cls->deleteClass('test1');
-echo "pass";
+?>
 
-//$cls->createClass('phy16','mon','7','30','4','amith');
-//echo "pass";
-//echo $cls->checkClass('phy18');
-
-
-
-
-
-
- ?>
+  </select>
+</body>
+</html>
