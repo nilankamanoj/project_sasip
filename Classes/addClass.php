@@ -1,69 +1,77 @@
 <?php
+
 require_once("session.php");
 require('class.class.php');
 require_once("class.user.php");
 
 $auth_user = new USER();
-
-
 $auth_user_id = $_SESSION['user_session'];
-
 $auth_stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
 $auth_stmt->execute(array(":user_id"=>$auth_user_id));
-
 $userRow=$auth_stmt->fetch(PDO::FETCH_ASSOC);
-if ($userRow['user_level']!='2') {
-	$login->redirect('home.php');
+
+
+if ($userRow['user_level']!='2')
+{
+	$auth_user->redirect('home.php');
 }
 
 
 $cls=new Classs();
 $user = new USER();
 $clz="";
+
+
 if(isset($_POST['btn-signup']))
 {
 	$name = strip_tags($_POST['txt_name']);
-	//$umail = strip_tags($_POST['txt_umail']);
-  $teacher=$_POST['teacher'];
+	$teacher=$_POST['teacher'];
   $day=$_POST['week_day'];
   $hour=$_POST['hour'];
   $minit=$_POST['minit'];
   $duration=$_POST['duration'];
 
 
-	if($day=="NO")	{
+	if($day=="NO")
+	{
 		$error[] = "provide day !";
 	}
-  else if($hour=="NO")	{
+  else if($hour=="NO")
+	{
 		$error[] = "provide hour !";
 	}
-  else if($minit=="NO")	{
+  else if($minit=="NO")
+	{
 		$error[] = "provide minuits !";
 	}
-  else if($duration=="NO")	{
+  else if($duration=="NO")
+	{
 		$error[] = "provide duration !";
 	}
-  else if($teacher=="NO")	{
+  else if($teacher=="NO")
+	{
 		$error[] = "provide a techer name !";
 	}
-  else if($name=="")	{
+  else if($name=="")
+	{
 		$error[] = "provide a class name !";
 	}
-  else {
-    if($cls->checkClass($name)){
-      $cls->createClass($name,$day,$hour,$minit,$duration,$teacher);
-      //$_SESSION['varname'] = $var_value;
-      $_SESSION['class_name'] = $name;
-      $auth_user->redirect('selectHall.php');
-
-//On page 2
-//$var_value = $_SESSION['varname'];
 
 
-    }
-    else{
-      $error[]="provide different class name !";
-    }
+  else
+	{
+
+		if($cls->checkClass($name))
+			{
+				$cls->createClass($name,$day,$hour,$minit,$duration,$teacher);
+      	$_SESSION['class_name'] = $name;
+      	$auth_user->redirect('selectHall.php');
+			}
+
+			else
+			{
+				$error[]="provide different class name !";
+			}
   }
 
 }
@@ -94,27 +102,15 @@ if(isset($_POST['btn-signup']))
 	          <ul class="nav navbar-nav">
 	            <li><a href="home.php">Home</a></li>
 	            <li><a href="profile.php">Profile</a></li>
-
-							<?php
-
-							if ($userRow['user_level']=='2') { ?>
-								<li><a href="sign-up.php">Add user</a></li>
-							<?php } ?>
-							<?php
-
-							if ($userRow['user_level']=='2') { ?>
-								<li><a href="addStudent.php">Add Student</a></li>
-                <li class="active"><a href="addClass.php">Add Class</a></li>
-							<?php } ?>
-
+							<li><a href="sign-up.php">Add user</a></li>
+							<li><a href="addStudent.php">Add Student</a></li>
+              <li class="active"><a href="addClass.php">Add Class</a></li>
 
 	          </ul>
 	          <ul class="nav navbar-nav navbar-right">
-
-	            <li class="dropdown">
-								<?php  ?>
-	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-				  <span class="glyphicon glyphicon-user"></span>&nbsp;Hi' <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
+						<li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+				  	<span class="glyphicon glyphicon-user"></span>&nbsp;Hi' <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
 	              <ul class="dropdown-menu">
 	                <li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
 	                <li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
@@ -225,7 +221,7 @@ if(isset($_POST['btn-signup']))
 						$result->execute();
 						$array = $result->fetchAll(PDO::FETCH_COLUMN);
 						foreach ($array as &$user_name) {
-						
+
 
 							echo "<option value=".$user_name.">".$user_name."</option>";
 

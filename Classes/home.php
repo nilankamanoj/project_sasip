@@ -145,9 +145,11 @@ if($SystemUser->hasNewUsers()){?>
 				<?php } ?>
 
     <p class="blockquote-reverse" style="margin-top:200px;">
-    some footer here<br /><br />
-    <a href="">Option4</a>
-    </p>
+			<?php if ($userRow['user_level']=='1')
+				{
+
+			    echo "check users<br /><br /><a href="."userTable.php".">click here</a></p>";
+	}?>
 
     </div>
 

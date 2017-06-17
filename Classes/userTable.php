@@ -4,6 +4,7 @@
 	require("Owner.php");
 	require_once("session.php");
 	require_once("class.user.php");
+//require 'dbconfig.php';
 
 
 	$auth_user = new USER();
@@ -12,6 +13,8 @@
 	$stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
 	$stmt->execute(array(":user_id"=>$user_id));
 	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+  $db=new Database();
+  echo "pass";
 
 if ($userRow['user_level']!='1')
 	{
@@ -22,43 +25,33 @@ else if ($userRow['user_level']=='1')
 		$SystemUser=Owner::getInstance();
     echo "pass";
 	}
-	if($SystemUser->hasNewUsers()){
-	  $newUsers=$SystemUser->getNewUsers();
-	}
+  $db_host = 'localhost'; // Server Name
+  $db_user = 'newuser'; // Username
+  $db_pass = 'password'; // Password
+  $db_name = 'dblogin'; // Database Name
 
+  $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+  if (!$conn) {
+  	die ('Failed to connect to MySQL: ' . mysqli_connect_error());
+  }
 
+  $sql = 'SELECT *
+  		FROM users';
 
-	$num=0;
-	if(isset($_POST['btn-signup']))
-	{
+  $query = mysqli_query($conn, $sql);
 
-	  $user_name=$newUsers[$num]['user_name'];
-	  $SystemUser->AcceptUser($user_name);
-		$auth_user->redirect('acceptUser.php?joined');
+  if (!$query) {
+  	die ('SQL Error: ' . mysqli_error($conn));
+  }
 
-
-	}
-
-
-
-	if(isset($_POST['btn-delete']))
-	{
-
-		$user_name=$newUsers[$num]['user_name'];
-		$SystemUser->DeleteUser($user_name);
-		$auth_user->redirect('acceptUser.php');
-
-
-	}
-
-	?>
+?>
 
 
 	      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	      <html xmlns="http://www.w3.org/1999/xhtml">
 	      <head>
 	      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	      <title>Accept User</title>
+	      <title>User review</title>
 	      <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	      <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 	      <link rel="stylesheet" href="style.css" type="text/css"  />
@@ -79,7 +72,7 @@ else if ($userRow['user_level']=='1')
 	      	          <ul class="nav navbar-nav">
 	      	            <li><a href="home.php">Home</a></li>
 	      	            <li><a href="profile.php">Profile</a></li>
-	                    <li class="active"><a href="acceptUser.php">Accept User</a></li>
+	                    <li><a href="acceptUser.php">Accept User</a></li>
 											<li><a href="freeCard.php">Offer Free Card</a></li>
 											<li ><a href="selectHall.php">Book A Hall</a></li>
 											<li><a href="deleteStudent.php">Remove Student</a></li>
@@ -103,83 +96,62 @@ else if ($userRow['user_level']=='1')
 	      <div class="signin-form">
 
 	      <div class="container">
+          <h1>System Users</h1>
+          <table class="data-table">
 
-	              <form method="post" class="form-signin">
-	                  <h2 class="form-signin-heading">Accept User</h2><hr />
-	                  <?php
-	      			if(isset($error))
-	      			{
-	      			 	foreach($error as $error)
-	      			 	{
-	      					 ?>
-	                           <div class="alert alert-danger">
-	                              <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
-	                           </div>
-	                           <?php
-	      				}
-	      			}
-	      			else if(isset($_GET['joined']))
-	      			{
-	      				 ?>
-	                       <div class="alert alert-info">
-	                            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully Accepted <a href='index.php'>Go back</a>
-	                       </div>
-	                       <?php
-	      			}
+            <thead>
+              <tr>
+                <th>NO</th>
+                <th>user name</th>
+                <th>email</th>
+                <th>join date/time</th>
+                <th>occupation</th>
+              </tr>
+            </thead>
+            <tbody>
+  <?php
+            $no 	= 1;
+            $total 	= 0;
+            while ($row = mysqli_fetch_array($query))
+            {
+              $amount  = $row['amount'] == 0 ? '' : number_format($row['amount']);
+              $occupation="";
+              $ulvl=$row['user_level'];
+              if($ulvl=='1'){
+                $occupation='owner';
+              }
+              else if($ulvl=='2'){
+                $occupation='Staff Upper';
+              }
+              else if($ulvl=='3'){
+                $occupation='Staff Lower';
+              }
+              else if($ulvl=='4'){
+                $occupation='Teacher';
+              }
+              else if($ulvl=='5'){
+                $occupation='Card Marker';
+              }
+              echo '<tr>
+                  <td>'.$no.'</td>
+                  <td>'.$row['user_name'].'</td>
+                  <td>'.$row['user_email'].'</td>
+                  <td>'.$row['joining_date']. '</td>
+                  <td>'.$occupation.'</td>
+                </tr>';
+              $total ++;
+              $no++;
+            }?>
+            </tbody>
 
-
-	$arrlength = count($newUsers);
-	if($arrlength!=0){
-
-
-	?>
-	      <div class="form-group">
-					<?php
-					$occupation="";
-					$ulvl=$newUsers[$num]['user_level'];
-					if($ulvl=='2'){
-						$occupation='Staff Upper';
-					}
-					else if($ulvl=='3'){
-						$occupation='Staff Lower';
-					}
-					else if($ulvl=='4'){
-						$occupation='Teacher';
-					}
-					else if($ulvl=='5'){
-						$occupation='Card Marker';
-					}
-					 ?>
-	      <li><font color =#ooooff size=4>Name :</font><?php print($newUsers[$num]['user_name']); ?></li>
-	      <li><font color =#ooooff size=4>Email:</font><?php print($newUsers[$num]['user_email']); ?></li>
-	      <li><font color =#ooooff size=4>Occupation:</font><?php print($occupation); ?></li>
-	      <?php $user_name=$newUsers[$num]['user_name']; ?>
-
-
-
-	      <div class="clearfix"></div><hr />
-	      <div class="form-group">
-	        <button  type="submit" class="btn btn-primary" name="btn-signup">
-	            <i class="glyphicon glyphicon-open-file"></i>&nbsp;Confirm User
-	          </button>
-						<button  type="submit" background-color=#ffff00 name="btn-delete">
-		            <i class=""></i>&nbsp;Delete User
-		          </button>
-	      </div>
-	      <br />
-	      <label>want to cancel! <a href="index.php">Cancel</a></label>
+          </table>
+	     
 	  </form>
 	 </div>
-	 <?php }
-	 else { ?>
-	 	<label>No New Users           <a href="index.php">Go Back</a></label>
-	 <?php } ?>
+
+	 	   </div>
 
 
-
-	      </div>
-
-	      </div>
 
 	      </body>
 	      </html>

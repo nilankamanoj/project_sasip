@@ -21,24 +21,18 @@ class Student
 
 		return $stmt;
 	}
-  /*identity_no
-  first_name
-  last_name
-  phone_number
-  school_name
-  added_by`*/
+
 
 
 	public function register($idno,$fname,$lname,$pnum,$schname,$addedby,$cls)
 	{
 		try
 		{
-			//$new_password = password_hash($upass, PASSWORD_DEFAULT);
 
 			$this->conn->query("INSERT INTO {$cls}(identity_no,first_name,last_name,phone_number,school_name,added_by)
 		                                               VALUES('{$idno}','{$fname}','{$lname}','{$pnum}','{$schname}','{$addedby}')");
 
-			//return true;
+
 		}
 		catch(PDOException $e)
 		{
