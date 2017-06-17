@@ -54,6 +54,7 @@ last_name VARCHAR(15),
 phone_number VARCHAR(10),
 school_name VARCHAR(20),
 added_by VARCHAR(20),
+free VARCHAR(1),
 `joining_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
 
@@ -102,5 +103,21 @@ $this->conn->query($sql);
 		$this->conn->query("DELETE FROM classes  WHERE class_name = '{$name}' ");
 		$this->conn->query("DROP TABLE $name");
 	}
+	public function fetchAll()
+	{
+		$result =$this->conn->prepare("SELECT class_name FROM classes");
+		$result->execute();
+		$array = $result->fetchAll(PDO::FETCH_COLUMN);
+		return $array;
+
+		}
+		public function fetchTeacher($teacher)
+		{
+			$result =$this->conn->prepare("SELECT class_name FROM classes WHERE teacher_name='{$teacher}'");
+			$result->execute();
+			$array = $result->fetchAll(PDO::FETCH_COLUMN);
+			return $array;
+
+			}
 }
 ?>

@@ -38,7 +38,7 @@ else if ($userRow['user_level']=='1')
     $idno = strip_tags($_POST['txt_idno']);
 
 		if($cls=="NO")	{
-      $error[] = "provide class to offer free card!";
+      $error[] = "provide class to remove student !";
     }
 
     else if($idno=="")	{
@@ -71,13 +71,13 @@ else if ($userRow['user_level']=='1')
 	if(isset($_POST['btn-confirm']))
 	{
     $stu=new Student();
-    $stu->makeFree();
-    $auth_user->redirect('freeCard.php?joined');
+    $stu->delete();
+    $auth_user->redirect('deleteStudent.php?joined');
 	}
   if(isset($_POST['btn-another']))
   {
 
-    $auth_user->redirect('freeCard.php');
+    $auth_user->redirect('deleteStudent.php');
   }
 
 
@@ -88,7 +88,7 @@ else if ($userRow['user_level']=='1')
 	      <html xmlns="http://www.w3.org/1999/xhtml">
 	      <head>
 	      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	      <title>Offer Free Card</title>
+	      <title>Remove Student</title>
 	      <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	      <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 	      <link rel="stylesheet" href="style.css" type="text/css"  />
@@ -115,9 +115,9 @@ else if ($userRow['user_level']=='1')
           							<li><a href="acceptUser.php">Accept User</a></li>
           						<?php } ?>
 
-	                    <li class="active"><a href="freeCard.php">Offer Free Card</a></li>
+	                    <li><a href="freeCard.php">Offer Free Card</a></li>
 											<li ><a href="selectHall.php">Book A Hall</a></li>
-											<li><a href="deleteStudent.php">Remove Student</a></li>
+                      <li class="active"><a href="deleteStudent.php">Remove Student</a></li>
 
 
 	      	          </ul>
@@ -142,7 +142,7 @@ else if ($userRow['user_level']=='1')
 
 	              <form method="post" class="form-signin">
 <?php if($final_id==""){?>
-	                  <h2 class="form-signin-heading">Select Student</h2><hr />
+	                  <h2 class="form-signin-heading">Select Student to Remove</h2><hr />
 	                  <?php
 	      			if(isset($error))
 	      			{
@@ -159,7 +159,7 @@ else if ($userRow['user_level']=='1')
 	      			{
 	      				 ?>
 	                       <div class="alert alert-info">
-	                            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Free Card Offered !<a href='index.php'>Go back</a>
+	                            <i class="glyphicon glyphicon-log-in"></i> &nbsp; Student Removed !<a href='index.php'>Go back</a>
 	                       </div>
 	                       <?php
 	      			}?>
@@ -187,7 +187,7 @@ else if ($userRow['user_level']=='1')
               </div>
               <br />
 <?php }else{ ?>
-  <h2 class="form-signin-heading">Offer Free Card</h2><hr />
+  <h2 class="form-signin-heading">Remove Student</h2><hr />
 
   <div class="form-group">
   <li><font color =#ooooff size=4>Name :</font><?php print($row['first_name']);print("  ");print($row['last_name'])?></li>
@@ -198,7 +198,7 @@ else if ($userRow['user_level']=='1')
   <div class="clearfix"></div><hr />
   <div class="form-group">
   <button  type="submit" class="btn btn-primary" name="btn-confirm">
-  <i class="glyphicon glyphicon-open-file"></i>&nbsp;Offer free card
+  <i class="glyphicon glyphicon-open-file"></i>&nbsp;Remove Student
   </button>
   <button  type="submit" background-color=#ffff00 name="btn-another">
   <i class=""></i>&nbsp;Search Again

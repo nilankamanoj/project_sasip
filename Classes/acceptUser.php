@@ -77,7 +77,7 @@ else if ($userRow['user_level']=='1')
 	                    <li class="active"><a href="acceptUser.php">Accept User</a></li>
 											<li><a href="freeCard.php">Offer Free Card</a></li>
 											<li ><a href="selectHall.php">Book A Hall</a></li>
-
+											<li><a href="deleteStudent.php">Remove Student</a></li>
 
 	      	          </ul>
 	      	          <ul class="nav navbar-nav navbar-right">
@@ -147,7 +147,7 @@ else if ($userRow['user_level']=='1')
 					 ?>
 	      <li><font color =#ooooff size=4>Name :</font><?php print($newUsers[$num]['user_name']); ?></li>
 	      <li><font color =#ooooff size=4>Email:</font><?php print($newUsers[$num]['user_email']); ?></li>
-	      <li><font color =#ooooff size=4>Level:</font><?php print($occupation); ?></li>
+	      <li><font color =#ooooff size=4>Occupation:</font><?php print($occupation); ?></li>
 	      <?php $user_name=$newUsers[$num]['user_name']; ?>
 
 

@@ -1,12 +1,15 @@
 <?php
 
 require_once('dbconfig.php');
+//require 'Owner.php';
+//require_once'class.teacher.php';
 
 class USER
 {
 
 	private $conn;
 	private $u__name="default";
+	private $sysuser="";
 
 	public function __construct()
 	{
@@ -103,6 +106,8 @@ class USER
 		unset($_SESSION['user_session']);
 		return true;
 	}
+
+
 
 
 

@@ -2,7 +2,7 @@
 class Database
 {
     private $host = "localhost";
-    //private $db_name = "dblogin";
+    private $dbname = "";
     private $username = "newuser";
     private $password = "password";
     public $conn;
@@ -22,6 +22,13 @@ class Database
         }
 
         return $this->conn;
+    }
+
+    public function getConn($db_name)
+    {
+      $this->dbname=$db_name;
+      $conn1 = new mysqli($this->host, $this->username, $this->password,$this->dbname);
+      return $conn1;
     }
 }
 ?>

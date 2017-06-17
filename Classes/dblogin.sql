@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 CREATE TABLE IF NOT EXISTS `pointers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `student_id` varchar(6) NOT NULL,
+  `class` varchar(15) NOT NULL,
+
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 CREATE TABLE IF NOT EXISTS `classes` (

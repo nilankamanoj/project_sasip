@@ -26,9 +26,11 @@ if ($userRow['user_level']=='2') {
 }
 
 
+//$cls=new Classs();
 
 $cls=new Classs();
 $user = new USER();
+$array=$cls->fetchTeacher($userRow['user_name']);
 $row=$cls->fetchClass($clsname);
 if(isset($_POST['btn-delete']))
 {
@@ -114,6 +116,9 @@ if(isset($_POST['btn-book']))
 								<li><a href="acceptUser.php">Accept User</a></li>
 								<li ><a href="freeCard.php">Offer Free Card</a></li>
 								<li class="active"><a href="selectHall.php">Book A Hall</a></li>
+									<li><a href="deleteStudent.php">Remove Student</a></l
+
+
 							<?php } ?>
 
 							<?php
@@ -122,6 +127,7 @@ if(isset($_POST['btn-book']))
 
 								<li><a href="freeCard.php">Offer Free Card</a></li>
 								<li class='active'><a href="selectHall.php">Book A Hall</a></li>
+									<li><a href="deleteStudent.php">Remove Student</a></l
 							<?php } ?>
 
 
@@ -176,18 +182,17 @@ if(isset($_POST['btn-book']))
 
 			if ($userRow['user_level']!='2') { ?>
 				<div class="form-group">
-	        <select name="cls_name">
-	        <option value="NO">Chose The Class</option>
-	        <option value="">cls1</option>
-	        <option value="">cls2</option>
-	        <option value="">cls3</option>
-	        <option value="">cls4</option>
+					<select name=cls>
+					<option value="NO">  Select Class  </option>
+					<?php
+					$classs=new Classs();
 
-
-
-
-	        </select><br>
-					</div>
+						//$array=$classs->fetchAll();
+						foreach ($array as &$class_name) {
+							echo "<option value=".$class_name.">".$class_name."</option>";
+						}?>
+		</select><br>
+			</div>
 					<div class="form-group">
 						<select name="date">
 						<option value="NO">Date</option>

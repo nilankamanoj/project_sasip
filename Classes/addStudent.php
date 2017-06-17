@@ -2,6 +2,7 @@
 require_once("session.php");
 require("class.student.php");
 require_once("class.user.php");
+require 'class.class.php';
 echo "pass1";
 $auth_user = new USER();
 
@@ -30,11 +31,14 @@ if(isset($_POST['btn-signup']))
 	$pnum = strip_tags($_POST['txt_pnum']);
 	$schname = strip_tags($_POST['txt_schname']);
   $addedby=$userRow['user_name'];
-
-  if($idno=="")	{
+  $cls = $_POST['cls'];
+  if($cls=="NO")	{
+		$error[] = "provide a class to Student !";
+	}
+  else if($idno=="")	{
 		$error[] = "provide student id !";
 	}
-  if(strlen($idno)!=6)	{
+  else if(strlen($idno)!=6)	{
 		$error[] = "provide valid student id !";
 	}
   else if(ctype_digit($idno)=="")	{
@@ -59,9 +63,9 @@ if(isset($_POST['btn-signup']))
 	{
 		try
 		{
-      $stmt = $student->runQuery("SELECT identity_no FROM students WHERE identity_no=:idno");
-			$stmt->execute(array(':idno'=>$idno));
-			$row=$stmt->fetch(PDO::FETCH_ASSOC);
+      $stmt = $student->runQuery("SELECT identity_no FROM {$cls} WHERE identity_no='{$idno}'");
+			//$stmt->execute(array(':idno'=>$idno));
+			$row=$stmt->fetch_assoc();
 
 			if($row['identity_no']==$idno) {
 				$error[] = "sorry identity card already taken !";
@@ -70,9 +74,9 @@ if(isset($_POST['btn-signup']))
       			else
       			{
               $addedby=$userRow['user_name'];
-      				if($student->register($idno,$fname,$lname,$pnum,$schname,$addedby)){
+      				$student->register($idno,$fname,$lname,$pnum,$schname,$addedby,$cls);
       					$auth_user->redirect('addStudent.php?joined');
-      				}
+
       			}
       		}
       		catch(PDOException $e)
@@ -170,6 +174,18 @@ if(isset($_POST['btn-signup']))
                        <?php
       			}
       			?>
+              <div class="form-group">
+                <select name=cls>
+                <option value="NO">  Slect Class  </option>
+                <?php
+                $classs=new Classs();
+
+                  $array=$classs->fetchAll();
+                  foreach ($array as &$class_name) {
+                    echo "<option value=".$class_name.">".$class_name."</option>";
+                  }?>
+          </select><br>
+            </div>
                   <div class="form-group">
 
                   <input type="text" class="form-control" name="txt_idno" placeholder="Enter Id Number" value="<?php if(isset($error)){echo $idno;}?>" />

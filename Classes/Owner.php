@@ -2,20 +2,24 @@
 /**
  *
  */
-//require('dbconnection.php');
+//require('class.teacher.php');
+require 'dbconfig.php';
 class Owner
 {
   //private $conn;
-  private $conn;
+  private $userconn;
   private static $instance;
 
   private function __construct()
   {
-    echo "newly consructed";
-    $mysqli = new mysqli('localhost', 'newuser', 'password', 'dblogin');
-    $this->conn=$mysqli;
+    $db=new Database();
+  
+  //$mysqli = new mysqli('localhost', 'newuser', 'password', 'dblogin');
+  //$this->conn=$mysqli;
     //$database = new Dbconnection();
-		//$this->conn = $database;
+	$this->userconn = $db->getConn('dblogin');
+
+  //  $this->conn=new Dbconnection('dblogin');
   }
   private function __clone(){
 
@@ -37,7 +41,8 @@ class Owner
 {
 
 
-$result = $this->conn->query("SELECT user_name FROM users WHERE permission is NULL");
+$result = $this->userconn->query("SELECT user_name FROM users WHERE permission is NULL");
+//$result=$result1->execute();
 if($result->num_rows == 0) {
      return(false);
 }
@@ -53,7 +58,7 @@ else
  {
    $newUsers=array();
    //echo "in_gnu";
-  $result = $this->conn->query("SELECT user_name,user_email,user_level FROM users WHERE permission is NULL");
+  $result = $this->userconn->query("SELECT user_name,user_email,user_level FROM users WHERE permission is NULL");
 //echo "in_gnu3";
    if ($result->num_rows > 0) {
       // output data of each row
@@ -70,13 +75,13 @@ else
  {
    echo "method ran";
 
-   $this->conn->query("UPDATE users SET permission = '1' WHERE user_name='{$uname}'");
+   $this->userconn->query("UPDATE users SET permission = '1' WHERE user_name='{$uname}'");
    //header("Location: acceptUser.php");
  }
  public function DeleteUser($uname)
  {
    //"DELETE FROM `users` WHERE `user_name`='{$uname}'"
-   $this->conn->query( "DELETE FROM users WHERE user_name='{$uname}'");
+   $this->userconn->query( "DELETE FROM users WHERE user_name='{$uname}'");
  }
 }
 

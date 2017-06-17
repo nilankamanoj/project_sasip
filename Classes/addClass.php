@@ -2,6 +2,7 @@
 require_once("session.php");
 require('class.class.php');
 require_once("class.user.php");
+
 $auth_user = new USER();
 
 
@@ -23,7 +24,7 @@ if(isset($_POST['btn-signup']))
 {
 	$name = strip_tags($_POST['txt_name']);
 	//$umail = strip_tags($_POST['txt_umail']);
-  $teacher=strip_tags($_POST['txt_teacher']);
+  $teacher=$_POST['teacher'];
   $day=$_POST['week_day'];
   $hour=$_POST['hour'];
   $minit=$_POST['minit'];
@@ -42,7 +43,7 @@ if(isset($_POST['btn-signup']))
   else if($duration=="NO")	{
 		$error[] = "provide duration !";
 	}
-  else if($teacher=="")	{
+  else if($teacher=="NO")	{
 		$error[] = "provide a techer name !";
 	}
   else if($name=="")	{
@@ -213,9 +214,27 @@ if(isset($_POST['btn-signup']))
           </select><br>
 
           </div>
-						<div class="form-group">
-            <input type="text" class="form-control" name="txt_teacher" placeholder="Enter Teacher's Name" value="<?php if(isset($error)){echo $teacher;}?>" />
-            </div>
+					<div class="form-group">
+						<select name="teacher">
+						<option value="NO">Select teacher</option>
+						<?php
+
+						$db=new Database();
+						$conn=$db-> dbConnection('dblogin');
+						$result = $conn->prepare("SELECT user_name FROM users WHERE user_level='1' OR user_level='4'");
+						$result->execute();
+						$array = $result->fetchAll(PDO::FETCH_COLUMN);
+						foreach ($array as &$user_name) {
+						
+
+							echo "<option value=".$user_name.">".$user_name."</option>";
+
+						}
+
+						?>
+
+					</select><br>
+					</div>
 
             <div class="clearfix"></div><hr />
             <div class="form-group">
