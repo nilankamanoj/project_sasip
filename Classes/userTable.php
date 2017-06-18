@@ -1,9 +1,9 @@
 <?php
 
 
-	require("Owner.php");
+
 	require_once("session.php");
-	require_once("class.user.php");
+	require("classes/connecter.php");
 //require 'dbconfig.php';
 
 
@@ -13,8 +13,7 @@
 	$stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
 	$stmt->execute(array(":user_id"=>$user_id));
 	$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-  $db=new Database();
-  echo "pass";
+
 
 if ($userRow['user_level']!='1')
 	{
@@ -25,24 +24,8 @@ else if ($userRow['user_level']=='1')
 		$SystemUser=Owner::getInstance();
     echo "pass";
 	}
-  $db_host = 'localhost'; // Server Name
-  $db_user = 'newuser'; // Username
-  $db_pass = 'password'; // Password
-  $db_name = 'dblogin'; // Database Name
+$userArray=$auth_user->fetchAll();
 
-  $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
-  if (!$conn) {
-  	die ('Failed to connect to MySQL: ' . mysqli_connect_error());
-  }
-
-  $sql = 'SELECT *
-  		FROM users';
-
-  $query = mysqli_query($conn, $sql);
-
-  if (!$query) {
-  	die ('SQL Error: ' . mysqli_error($conn));
-  }
 
 ?>
 
@@ -112,8 +95,7 @@ else if ($userRow['user_level']=='1')
   <?php
             $no 	= 1;
             $total 	= 0;
-            while ($row = mysqli_fetch_array($query))
-            {
+            foreach ($userArray as &$row) {
               $amount  = $row['amount'] == 0 ? '' : number_format($row['amount']);
               $occupation="";
               $ulvl=$row['user_level'];
@@ -138,14 +120,15 @@ else if ($userRow['user_level']=='1')
                   <td>'.$row['user_email'].'</td>
                   <td>'.$row['joining_date']. '</td>
                   <td>'.$occupation.'</td>
-                </tr>';
+                <td><button action=#>delete</button></td></tr>';
+
               $total ++;
               $no++;
             }?>
             </tbody>
 
           </table>
-	     
+
 	  </form>
 	 </div>
 

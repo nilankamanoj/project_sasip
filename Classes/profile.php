@@ -1,9 +1,7 @@
 <?php
-	require("Owner.php");
-	require_once("session.php");
-	require 'class.class.php';
 
-	require_once("class.user.php");
+	require_once("session.php");
+	require("classes/connecter.php");
 	$auth_user = new USER();
 	$SystemUser=Null;
 

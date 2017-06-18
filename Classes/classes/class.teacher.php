@@ -3,7 +3,7 @@
 /**
  *
  */
- require 'dbconfig.php';
+require_once('class.database.php');
 class Teacher
 {
   private $name;

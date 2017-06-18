@@ -1,7 +1,8 @@
 <?php
 require_once("session.php");
-require('class.class.php');
-require_once("class.user.php");
+require("classes/connecter.php");
+
+
 $auth_user = new USER();
 $clsname="";
 $clsname=$_SESSION['class_name'];

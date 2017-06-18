@@ -1,28 +1,27 @@
 <?php
 require_once("session.php");
-require("class.student.php");
-require_once("class.user.php");
-require 'class.class.php';
-echo "pass1";
+require_once("classes/connecter.php");
+
+
+
 $auth_user = new USER();
-
-
 $auth_user_id = $_SESSION['user_session'];
-
 $auth_stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
 $auth_stmt->execute(array(":user_id"=>$auth_user_id));
-
 $userRow=$auth_stmt->fetch(PDO::FETCH_ASSOC);
-if ($userRow['user_level']!='2') {
-  if ($userRow['user_level']!='3') {
-  	$login->redirect('home.php');
-  }
+
+
+
+if (($userRow['user_level']!='2') && ($userRow['user_level']!='3')){
+  	$auth_user->redirect('home.php');
 }
 
 
 
-//$student = new Student();
+
 $student = new Student();
+
+
 if(isset($_POST['btn-signup']))
 {
   $idno = strip_tags($_POST['txt_idno']);
@@ -32,6 +31,8 @@ if(isset($_POST['btn-signup']))
 	$schname = strip_tags($_POST['txt_schname']);
   $addedby=$userRow['user_name'];
   $cls = $_POST['cls'];
+
+
   if($cls=="NO")	{
 		$error[] = "provide a class to Student !";
 	}
@@ -59,6 +60,8 @@ if(isset($_POST['btn-signup']))
   else if($schname=="")	{
 		$error[] = "provide school Name !";
 	}
+
+
 	else
 	{
 		try

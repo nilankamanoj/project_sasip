@@ -1,9 +1,9 @@
 <?php
 
 
-	require("Owner.php");
+
 	require_once("session.php");
-	require_once("class.user.php");
+	require_once("classes/connecter.php");
 
 
 	$auth_user = new USER();
@@ -20,8 +20,7 @@ if ($userRow['user_level']!='1')
 else if ($userRow['user_level']=='1')
 	{
 		$SystemUser=Owner::getInstance();
-    echo "pass";
-	}
+  }
 	if($SystemUser->hasNewUsers()){
 	  $newUsers=$SystemUser->getNewUsers();
 	}
@@ -29,6 +28,7 @@ else if ($userRow['user_level']=='1')
 
 
 	$num=0;
+
 	if(isset($_POST['btn-signup']))
 	{
 

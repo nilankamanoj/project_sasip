@@ -2,8 +2,7 @@
 /**
  *
  */
-//require('class.teacher.php');
-require 'dbconfig.php';
+require_once('class.database.php');
 class Owner
 {
   //private $conn;
@@ -13,7 +12,7 @@ class Owner
   private function __construct()
   {
     $db=new Database();
-  
+
   //$mysqli = new mysqli('localhost', 'newuser', 'password', 'dblogin');
   //$this->conn=$mysqli;
     //$database = new Dbconnection();

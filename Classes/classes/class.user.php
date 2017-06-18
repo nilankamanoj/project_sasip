@@ -1,8 +1,6 @@
 <?php
 
-require_once('dbconfig.php');
-//require 'Owner.php';
-//require_once'class.teacher.php';
+require_once('class.database.php');
 
 class USER
 {
@@ -105,6 +103,16 @@ class USER
 		session_destroy();
 		unset($_SESSION['user_session']);
 		return true;
+	}
+
+	public function fetchAll()
+	{
+
+		$result =$this->conn->prepare("SELECT user_id, user_name, user_email, user_pass, user_level,joining_date FROM users");
+		$result->execute();
+		$array = $result->fetchAll(PDO::FETCH_ASSOC);
+		return $array;
+
 	}
 
 

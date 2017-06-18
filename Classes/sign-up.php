@@ -1,7 +1,7 @@
 <?php
 require_once("session.php");
 
-require_once("class.user.php");
+require_once("classes/class.user.php");
 $auth_user = new USER();
 
 
