@@ -80,7 +80,9 @@ else
  public function DeleteUser($uname)
  {
    //"DELETE FROM `users` WHERE `user_name`='{$uname}'"
+
    $this->userconn->query( "DELETE FROM users WHERE user_name='{$uname}'");
+   
  }
 }
 

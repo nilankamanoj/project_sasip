@@ -79,6 +79,15 @@ $userArray=$auth_user->fetchAll();
 	      <div class="signin-form">
 
 	      <div class="container">
+					<?php
+				if(isset($_GET['ok']))
+					{
+						 ?>
+										 <div class="alert alert-info">
+													<i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully Deleted<a href='index.php'>Go back</a>
+										 </div>
+										 <?php
+					}?>
           <h1>System Users</h1>
           <table class="data-table">
 
@@ -95,6 +104,7 @@ $userArray=$auth_user->fetchAll();
   <?php
             $no 	= 1;
             $total 	= 0;
+						$u__name='';
             foreach ($userArray as &$row) {
               $amount  = $row['amount'] == 0 ? '' : number_format($row['amount']);
               $occupation="";
@@ -114,20 +124,53 @@ $userArray=$auth_user->fetchAll();
               else if($ulvl=='5'){
                 $occupation='Card Marker';
               }
+
+
               echo '<tr>
                   <td>'.$no.'</td>
                   <td>'.$row['user_name'].'</td>
                   <td>'.$row['user_email'].'</td>
                   <td>'.$row['joining_date']. '</td>
-                  <td>'.$occupation.'</td>
-                <td><button action=#>delete</button></td></tr>';
+                  <td>'.$occupation.'</td>';
+
+
+
+									echo "<td><form method='post'>";
+   							echo "<input type='hidden' name='u_name' value=' ".$row['user_name'] . " '/>";
+   							echo "<input class='z' type='submit' name='delete'  value='delete'> </form></td>";
+									echo "</tr>";
+
 
               $total ++;
               $no++;
+							if(isset($_POST['delete']))
+							{
+								if(strlen($_POST['u_name'])!=0){
+									//echo "pass";
+
+								$u__name = $_POST['u_name'];
+							}
+
+							$owner=Owner::getInstance();
+							echo "pass";
+							$u__name='cmarker1';
+							$owner->DeleteUser($u__name);
+
+
+
+							}
+
+
             }?>
             </tbody>
 
           </table>
+					<?php
+					echo $u__name;
+					echo $st;
+
+
+					?>
 
 	  </form>
 	 </div>
