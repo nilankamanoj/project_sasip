@@ -4,7 +4,6 @@
 
 	require_once("session.php");
 	require("classes/connecter.php");
-//require 'dbconfig.php';
 
 
 	$auth_user = new USER();
@@ -78,6 +77,7 @@ $userArray=$auth_user->fetchAll();
 
 	      <div class="signin-form">
 
+
 	      <div class="container">
 					<?php
 				if(isset($_GET['ok']))
@@ -133,11 +133,16 @@ $userArray=$auth_user->fetchAll();
                   <td>'.$row['joining_date']. '</td>
                   <td>'.$occupation.'</td>';
 
+									if($ulvl!='1' && $ulvl!='2'){
 
 
-									echo "<td><form method='post'>";
+?>
+									<td><form method='post' onsubmit="return confirm('are you sure?')">
+									<?php }
+									if($ulvl!='1' && $ulvl!='2'){
    							echo "<input type='hidden' name='u_name' value=' ".$row['user_name'] . " '/>";
    							echo "<input class='z' type='submit' name='delete'  value='delete'> </form></td>";
+							}
 									echo "</tr>";
 
 
@@ -151,10 +156,20 @@ $userArray=$auth_user->fetchAll();
 								$u__name = $_POST['u_name'];
 							}
 
+
+							//echo "pass1";
+							//$st="<form method='post'><input type='hidden' name='u_name' value=' ".$u__name. " '/><input class='z' type='submit' name='confirm'  value='confirm'> </form>";
 							$owner=Owner::getInstance();
-							echo "pass";
-							$u__name='cmarker1';
-							$owner->DeleteUser($u__name);
+							//echo "pass";
+							//$u__name='cmarker1';
+							$owner->DeleteUser(trim($u__name));
+							$auth_user->redirect('userTable.php?ok');
+							//echo trim($u__name);
+
+							//echo "pass";
+							//$u__name='cmarker1';
+							//
+
 
 
 
@@ -165,12 +180,9 @@ $userArray=$auth_user->fetchAll();
             </tbody>
 
           </table>
-					<?php
-					echo $u__name;
-					echo $st;
 
 
-					?>
+
 
 	  </form>
 	 </div>
