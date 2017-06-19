@@ -64,4 +64,4 @@ id,class_name,class_day,class_time_hour,class_time_minit,teacher_name,stu_count,
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*UPDATE users SET permission = '1' WHERE user_name='user1';
 CREATE TABLE IF NOT EXISTS `pointers` (
-  `user_id` int(6));
+`user_id` int(6));

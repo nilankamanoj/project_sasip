@@ -15,7 +15,7 @@ class USER
 		$db = $database->dbConnection("dblogin");
 		$this->conn = $db;
 
-    }
+	}
 
 
 	public function runQuery($sql)
@@ -32,7 +32,7 @@ class USER
 			$new_password = password_hash($upass, PASSWORD_DEFAULT);
 
 			$stmt = $this->conn->prepare("INSERT INTO users(user_name,user_email,user_pass,user_level)
-		                                               VALUES(:uname, :umail, :upass, :ulevel)");
+			VALUES(:uname, :umail, :upass, :ulevel)");
 
 			$stmt->bindparam(":uname", $uname);
 			$stmt->bindparam(":umail", $umail);
@@ -93,8 +93,6 @@ class USER
 	public function redirect($url)
 	{
 
-
-		// $_SESSION['login'] = $this;
 		header("Location: $url");
 	}
 
@@ -120,5 +118,4 @@ class USER
 
 
 }
-//INSERT INTO users(user_name,user_email,user_pass,user_level) VALUES('user2','user2@com.com','password2',2);
 ?>
