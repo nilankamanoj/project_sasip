@@ -1,0 +1,22 @@
+require("classes/connecter.php");
+$db=new Database();
+$conn1=$db->dbConnection('dbclasses');
+$stmt1=$conn1->prepare("SELECT * FROM classes");
+//$result =$this->conn->prepare("SELECT user_id, user_name, user_email, user_pass, user_level,joining_date FROM users");
+$stmt1->execute();
+$array = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+
+$pdf = new FPDF( );
+$pdf->AddPage();
+$pdf->SetFont('Arial','B',16);
+$x=0;
+
+
+$pdf->Write(0, 'This is just a simple text');
+ //$pdf->SetXY(0, 0);
+$pdf->Write(0, 'This is just a simple text2');
+
+
+
+//$pdf->Cell(0,10,'PHP - The Good Parts!');
+$pdf->Output();

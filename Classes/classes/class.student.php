@@ -45,7 +45,7 @@ class Student
 	public function fetchStudent($idno,$cls)
 	{
 
-		$stmt1=$this->conn->query("SELECT  identity_no,first_name,last_name,phone_number,school_name,added_by FROM {$cls} WHERE identity_no ='{$idno}'");
+		$stmt1=$this->conn->query("SELECT  identity_no,first_name,last_name,phone_number,school_name,added_by,joining_date FROM {$cls} WHERE identity_no ='{$idno}'");
 		$this->conn->query("INSERT INTO pointers(student_id,class) VALUES('{$idno}','{$cls}')");
 		$row = $stmt1->fetch_assoc();
 
