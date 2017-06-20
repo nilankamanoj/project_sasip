@@ -112,11 +112,20 @@ if(isset($_POST['btn-another']))
 					<?php
 					if ($userRow['user_level']=='1') { ?>
 						<li><a href="acceptUser.php">Accept User</a></li>
+						<div class="dropdown">
+							<button class="dropbtn">Other Options</button>
+							<div class="dropdown-content">
+								<a href="userTable.php">view/remove users</a>
+								<a href="overolReport.php">get Overoll report</a>
+
+							</div>
+						</div>
 						<?php } ?>
 
 						<li class="active"><a href="freeCard.php">Offer Free Card</a></li>
 						<li ><a href="selectHall.php">Book A Hall</a></li>
 						<li><a href="deleteStudent.php">Remove Student</a></li>
+
 
 
 					</ul>

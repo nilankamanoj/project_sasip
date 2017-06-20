@@ -63,7 +63,7 @@ if ($userRow['user_level']=='1')
 							<?php } ?>
 
 							<?php
-
+							
 							if ($userRow['user_level']=='3') { ?>
 								<li><a href="addStudent.php">Add Student</a></li>
 								<?php } ?>

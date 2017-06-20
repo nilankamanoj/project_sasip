@@ -78,6 +78,14 @@ if(isset($_POST['btn-delete']))
 					<li><a href="freeCard.php">Offer Free Card</a></li>
 					<li ><a href="selectHall.php">Book A Hall</a></li>
 					<li><a href="deleteStudent.php">Remove Student</a></li>
+					<div class="dropdown">
+						<button class="dropbtn">Other Options</button>
+						<div class="dropdown-content">
+							<a href="userTable.php">view/remove users</a>
+							<a href="overolReport.php">get Overoll report</a>
+
+						</div>
+					</div>
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
