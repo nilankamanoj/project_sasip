@@ -74,6 +74,14 @@ if ($userRow['user_level']=='1')
 									<li><a href="freeCard.php">Offer Free Card</a></li>
 									<li ><a href="selectHall.php">Book A Hall</a></li>
 									<li><a href="deleteStudent.php">Remove Student</a></li>
+									<div class="dropdown">
+										<button class="dropbtn">Other Options</button>
+										<div class="dropdown-content">
+											<a href="userTable.php">view/remove users</a>
+											<a href="overolReport.php">get Overoll report</a>
+
+										</div>
+									</div>
 									<?php } ?>
 									<?php
 
@@ -105,61 +113,60 @@ if ($userRow['user_level']=='1')
 										</div><!--/.nav-collapse -->
 									</div>
 								</nav>
+							</div>
 
-								<div class="clearfix"></div>
 
-								<div class="container-fluid" style="margin-top:80px;">
+							<div class="clearfix"></div>
 
-									<div class="container">
+							<div class="container-fluid" style="margin-top:80px;">
 
-										<label class="h5">welcome : <?php print($userRow['user_name']); ?></label>
+								<div class="container">
+
+									<label class="h5">welcome : <?php print($userRow['user_name']); ?></label>
+									<hr />
+
+									<h1>
+										<a href="home.php"><span class="glyphicon glyphicon-home"></span> home</a> &nbsp;
+										<a href="profile.php"><span class="glyphicon glyphicon-user"></span> profile</a></h1>
 										<hr />
 
-										<h1>
-											<a href="home.php"><span class="glyphicon glyphicon-home"></span> home</a> &nbsp;
-											<a href="profile.php"><span class="glyphicon glyphicon-user"></span> profile</a></h1>
-											<hr />
+										<p class="h4">Notifications Here</p>
+										<br></br>
 
-											<p class="h4">Notifications Here</p>
-											<br></br>
+
+										<?php
+
+										if ($userRow['user_level']=='1') {
+											if($SystemUser->hasNewUsers()){?>
+												<p><font color=#ff0000>New Users Added : </font><a href="acceptUser.php">Checkout Now</a></p>
+
+												<?php
+											}}?>
+
+
 
 
 											<?php
 
-											if ($userRow['user_level']=='1') {
-												if($SystemUser->hasNewUsers()){?>
-													<p><font color=#ff0000>New Users Added : </font><a href="acceptUser.php">Checkout Now</a></p>
+											if ($userRow['user_level']=='2') { ?>
 
-													<?php
-												}}?>
+												<p>content for user2</p>
 
 
+												<?php } ?>
 
+												<p class="blockquote-reverse" style="margin-top:200px;">
 
-												<?php
-
-												if ($userRow['user_level']=='2') { ?>
-
-													<p>content for user2</p>
-
-
-													<?php } ?>
-
-													<p class="blockquote-reverse" style="margin-top:200px;">
-														<?php if ($userRow['user_level']=='1')
-														{
-
-															echo "check users<br /><br /><a href="."userTable.php".">click here</a></p>";
-														}?>
-
-													</div>
 
 												</div>
 
+											</div>
 
 
 
-												<script src="bootstrap/js/bootstrap.min.js"></script>
 
-											</body>
-											</html>
+											<script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+										</body>
+										</html>

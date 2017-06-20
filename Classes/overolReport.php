@@ -1,6 +1,21 @@
 <?php
 require_once("classes/connecter.php");
 require('fpdf181/fpdf.php');
+require_once("session.php");
+
+$auth_user = new USER();
+$SystemUser=Null;
+$user_id = $_SESSION['user_session'];
+$stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
+$stmt->execute(array(":user_id"=>$user_id));
+$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($userRow['user_level']!='1')
+{
+	$auth_user->redirect('home.php');
+}
+
+
 $db = new Database();
 $conn1=$db->getConn('dbclasses');
 $conn2=$db->getConn('dblogin');
