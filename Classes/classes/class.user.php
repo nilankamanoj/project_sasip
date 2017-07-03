@@ -112,6 +112,41 @@ class USER
 		return $array;
 
 	}
+	public function changePassword($uname,$upass1,$upass2)
+	{
+		try
+		{
+			$stmt = $this->conn->prepare("SELECT user_pass FROM users WHERE user_name=:uname");
+			$stmt->execute(array(':uname'=>$uname));
+			$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+			if(password_verify($upass1, $userRow['user_pass']))
+			{
+
+				$new_password = password_hash($upass2, PASSWORD_DEFAULT);
+
+				$stmt = $this->conn->prepare("UPDATE users SET user_pass=:upass WHERE user_name=:uname");
+
+				$stmt->bindparam(":uname", $uname);
+				$stmt->bindparam(":upass", $new_password);
+
+				$stmt->execute();
+
+				//echo "changed";
+
+				return true;
+			}
+			else
+			{
+				return false;
+				//echo "wrong pass";
+			}
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
+		}
+	}
 
 
 

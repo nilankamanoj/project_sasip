@@ -63,7 +63,7 @@ if ($userRow['user_level']=='1')
 							<?php } ?>
 
 							<?php
-							
+
 							if ($userRow['user_level']=='3') { ?>
 								<li><a href="addStudent.php">Add Student</a></li>
 								<?php } ?>
@@ -98,7 +98,7 @@ if ($userRow['user_level']=='1')
 											<?php } ?>
 
 										</ul>
-
+										
 										<ul class="nav navbar-nav navbar-right">
 
 											<li class="dropdown">
@@ -109,6 +109,7 @@ if ($userRow['user_level']=='1')
 														<li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
 													</ul>
 												</li>
+												<li><a href="changePass.php">Change Password</a></li>
 											</ul>
 										</div><!--/.nav-collapse -->
 									</div>
