@@ -88,6 +88,7 @@ if(isset($_POST['btn-another']))
 	<title>Remove Student</title>
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+	<script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
 	<link rel="stylesheet" href="style.css" type="text/css"  />
 </head>
 <body>
@@ -134,6 +135,7 @@ if(isset($_POST['btn-another']))
 								<span class="glyphicon glyphicon-user"></span>&nbsp;Hi' <?php echo $userRow['user_email']; ?>&nbsp;<span class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
+									<li><a href="changePass.php"><span class="glyphicon glyphicon-user"></span>&nbsp;Change Password</a></li>
 									<li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
 								</ul>
 							</li>
@@ -221,7 +223,7 @@ if(isset($_POST['btn-another']))
 
 
 
-
+						<script src="bootstrap/js/bootstrap.min.js"></script>
 
 					</body>
 					</html>

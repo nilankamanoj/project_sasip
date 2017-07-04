@@ -59,7 +59,7 @@ if ($userRow['user_level']=='1')
 						if ($userRow['user_level']=='2') { ?>
 							<li><a href="addStudent.php">Add Student</a></li>
 							<?php } ?>
-							
+
 							<?php
 
 							if ($userRow['user_level']=='3') { ?>
@@ -106,6 +106,7 @@ if ($userRow['user_level']=='1')
 													<ul class="dropdown-menu">
 
 														<li><a href="profile.php"><span class="glyphicon glyphicon-user"></span>&nbsp;View Profile</a></li>
+														<li><a href="changePass.php"><span class="glyphicon glyphicon-user"></span>&nbsp;Change Password</a></li>
 														<li><a href="logout.php?logout=true"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
 													</ul>
 												</li>
@@ -119,96 +120,83 @@ if ($userRow['user_level']=='1')
 								<div class="container-fluid" style="margin-top:80px;">
 
 									<div class="container">
-
-
-										<hr />
-										<meta charset="utf-8" />
 										<meta name="viewport" content="width=device-width, initial-scale=1" />
-										<!--[if lte IE 8]><script src="assets/js/html5shiv.js"></script><![endif]-->
-										<link rel="stylesheet" href="assets/css/main.css" />
-										<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-										<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-										<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-									</head>
+										<div id="wrapper">
 
 
-									<!-- Wrapper -->
-									<div id="wrapper">
-
-										<!-- Main -->
-										<section id="main">
-											<header>
-												<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>
-												<h1><?php print($userRow['user_name']); ?></h1>
-												<p><?php print($userRow['user_email']); ?></p>
-												<p>Join : <?php print($userRow['joining_date']); ?></p>
+											<section id="main">
+												<header>
+													<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>
+													<h1><?php print($userRow['user_name']); ?></h1>
+													<p><?php print($userRow['user_email']); ?></p>
+													<p>Join : <?php print($userRow['joining_date']); ?></p>
 
 
 
-												<?php
-												if ($userRow['user_level']=='1'){
-													echo "<p>State : Owner/Teacher</p>";
-												}if ($userRow['user_level']=='2'){
-													echo "<p>State : Staff(High level)</p>";
-												}
-												if ($userRow['user_level']=='3'){
-													echo "<p>State : Staff(Low level)</p>";
-												}
-												if ($userRow['user_level']=='4'){
-													echo "<p>State : Teacher</p>";
-												}
-												if ($userRow['user_level']=='5'){
-													echo "<p>State : Card marker</p>";
-												}
-
-												if (($userRow['user_level']=='4') ||($userRow['user_level']=='1')){
-													$cls=new Classs();
-													$array=$cls->fetchTeacher($userRow['user_name']);
-													echo "<p>Classes :";
-													foreach ($array as &$class_name) {
-														echo " &nbsp;".$class_name."";
+													<?php
+													if ($userRow['user_level']=='1'){
+														echo "<p>State : Owner/Teacher</p>";
+													}if ($userRow['user_level']=='2'){
+														echo "<p>State : Staff(High level)</p>";
 													}
-													echo "</p>";
-												} ?>
+													if ($userRow['user_level']=='3'){
+														echo "<p>State : Staff(Low level)</p>";
+													}
+													if ($userRow['user_level']=='4'){
+														echo "<p>State : Teacher</p>";
+													}
+													if ($userRow['user_level']=='5'){
+														echo "<p>State : Card marker</p>";
+													}
+
+													if (($userRow['user_level']=='4') ||($userRow['user_level']=='1')){
+														$cls=new Classs();
+														$array=$cls->fetchTeacher($userRow['user_name']);
+														echo "<p>Classes :";
+														foreach ($array as &$class_name) {
+															echo " &nbsp;".$class_name."";
+														}
+														echo "</p>";
+													} ?>
 
 
 
 
 
-											</header>
+												</header>
 
-											<footer>
+												<footer>
 
-											</footer>
-										</section>
+												</footer>
+											</section>
 
-										<!-- Footer -->
+											<!-- Footer -->
 
+
+										</div>
+
+										<!-- Scripts -->
+										<!--[if lte IE 8]><script src="assets/js/respond.min.js"></script><![endif]-->
+										<script>
+										if ('addEventListener' in window) {
+											window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
+											document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+										}
+										</script>
+
+										<p class="blockquote-reverse" style="margin-top:200px;">
+											some footer here<br /><br />
+											<a href="">Option4</a>
+										</p>
 
 									</div>
 
-									<!-- Scripts -->
-									<!--[if lte IE 8]><script src="assets/js/respond.min.js"></script><![endif]-->
-									<script>
-									if ('addEventListener' in window) {
-										window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
-										document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
-									}
-									</script>
-
-									<p class="blockquote-reverse" style="margin-top:200px;">
-										some footer here<br /><br />
-										<a href="">Option4</a>
-									</p>
-
 								</div>
 
-							</div>
 
 
 
+								<script src="bootstrap/js/bootstrap.min.js"></script>
 
-							<script src="bootstrap/js/bootstrap.min.js"></script>
-
-						</body>
-						</html>
+							</body>
+							</html>
