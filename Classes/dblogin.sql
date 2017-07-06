@@ -59,6 +59,15 @@ CREATE TABLE IF NOT EXISTS `classes` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 id,class_name,class_day,class_time_hour,class_time_minit,teacher_name,stu_count,hall
 
+
+CREATE TABLE IF NOT EXISTS `syslog` (
+  `activity_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(15) NOT NULL,
+  `activity_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `activity_description` varchar(50) NOT NULL,
+PRIMARY KEY (`activity_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

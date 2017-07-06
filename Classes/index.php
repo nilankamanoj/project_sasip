@@ -41,6 +41,7 @@ if(isset($_POST['btn-login']))
 	<link rel="stylesheet" href="style.css" type="text/css"  />
 </head>
 <body>
+	<script type="text/javascript">window.alert("Do not login/save password by devices you don't own")</script>
 
 	<div class="signin-form">
 
