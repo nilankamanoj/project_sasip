@@ -139,7 +139,9 @@ class USER
 				$stmt->bindparam(":upass", $new_password);
 
 				$stmt->execute();
-
+				$stmt2 = $this->conn->prepare("UPDATE users SET active = '1' WHERE user_name=:uname");
+				$stmt2->bindparam(":uname", $uname);
+				$stmt2->execute();
 				$rec=$this->dbase->getConn("dbsyslog");
 				$rec->query("INSERT INTO syslog(user_name,activity_description) VALUES('{$uname}','password changed')");
 				$rec->close();

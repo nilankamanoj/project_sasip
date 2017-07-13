@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
+ALTER TABLE `users` ADD `active` INT NULL DEFAULT NULL AFTER `permission`;
 CREATE TABLE IF NOT EXISTS `pointers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `student_id` varchar(6) NOT NULL,
