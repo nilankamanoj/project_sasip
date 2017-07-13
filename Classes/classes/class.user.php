@@ -162,6 +162,19 @@ class USER
 		}
 	}
 
+public function fetchLog($uname)
+{
+
+	$db = $this->dbase->dbConnection("dbsyslog");
+
+	$result =$db->prepare("SELECT * FROM syslog WHERE user_name='{$uname}'");
+
+
+	$result->execute();
+	echo "1";
+	$array = $result->fetchAll(PDO::FETCH_ASSOC);
+	return $array;
+}
 
 
 

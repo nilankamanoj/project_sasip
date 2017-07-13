@@ -135,7 +135,7 @@ if ($userRow['active']==NULL)
 										<a href="profile.php"><span class="glyphicon glyphicon-user"></span> profile</a></h1>
 										<hr />
 
-										<p class="h4">Notifications Here</p>
+										<p class="h4"><a href="viewLog.php">View My Past Activities</a></p>
 										<br></br>
 
 
