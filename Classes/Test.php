@@ -1,7 +1,7 @@
 <?php
-require_once("classes/connecter.php");
-$stu=new student();
+require 'classes/connecter.php';
+$stu=new Student();
+
+$stu->loadAbs('phy18');
 echo "pass";
-$num=$stu->getCount("phy18");
-$stu->setCount('phy18',1);
 ?>

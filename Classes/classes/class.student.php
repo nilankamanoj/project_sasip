@@ -70,6 +70,7 @@ class Student
 		$idno=$row1['student_id'];
 		$cls=$row1['class'];
 		$this->conn->query("DELETE FROM {$cls} WHERE identity_no='{$idno}'");
+		$this->loadAbs($cls);
 		$count=$this->getCount($cls);
 		$this->setCount($cls,$count);
 
@@ -171,6 +172,60 @@ class Student
 	{
 		$this->conn->query("UPDATE classes SET stu_count = {$count} WHERE class_name='{$class}'");
 	}
+
+	public function checkAbs($idno,$cls)
+	{
+		$stmt=$this->conn->query("SELECT * FROM {$cls} WHERE identity_no ='{$idno}'");
+		$row = $stmt->fetch_assoc();
+
+		foreach (array_keys($row) as $key) {
+
+		    if($key[strlen($key)-1]=='d'){
+		      $dayArray[]=$key;
+		    }
+
+
+		}
+		//print_r($dayArray);
+		if(sizeof($dayArray)>4){
+		  $i=0;
+		  foreach (array_reverse($dayArray) as $key) {
+		    if($row[$key]==0){
+		      $i=$i+1;
+		    }
+		    if($i==4){
+		      return true;
+		      break;
+		    }
+		    else if($row[$key]==1){
+		      print false;
+		      break;
+		    }
+
+		  }
+		}
+		else {
+			return false;
+		}
+
+	}
+
+	public function loadAbs($class)
+	{
+		$abs=$class.'abs';
+		$stmt=$this->conn->query("SELECT * FROM {$class}");
+
+		while ($row = $stmt->fetch_assoc()) {
+			if($this->checkAbs($row['identity_no'],$class)){
+				$id=$row['identity_no'];
+				$sql3="INSERT INTO {$abs} (identity_no,first_name,last_name,phone_number,school_name,added_by,free,joining_date) SELECT identity_no,first_name,last_name,phone_number,school_name,added_by,free,joining_date FROM {$class} WHERE identity_no='{$id}'";
+				$this->conn->query($sql3);
+				$this->conn->query("DELETE FROM {$class} WHERE identity_no='{$id}'");
+			}
+		}
+
+	}
+
 
 }
 ?>

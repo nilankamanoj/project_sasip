@@ -5,8 +5,8 @@ class Database
 {
   private $host = "localhost";
   private $dbname = "";
-  private $username = "root";
-  private $password = "Za=f";
+  private $username = "newuser";
+  private $password = "password";
   public $conn;
 
 

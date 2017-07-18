@@ -9,6 +9,7 @@ $auth_stmt->execute(array(":user_id"=>$auth_user_id));
 $userRow=$auth_stmt->fetch(PDO::FETCH_ASSOC);
 if($_SESSION['class']!=NULL){
   $class=$_SESSION['class'];
+  $student = new Student();
 }
 
 
@@ -35,7 +36,7 @@ if(isset($_POST['btn-mark']))
     $error[] = "Input a valid ID";
   }
   else {
-    $student = new Student();
+
 
     $rec = $student->markCard($class,$_POST['s_id']);
     if($rec=="alreadyGone")
@@ -55,6 +56,7 @@ if(isset($_POST['btn-mark']))
 }
 else if(isset($_POST['btn-another']))
 {
+  $student->loadAbs($class);
   $_SESSION['class']=NULL;
   $auth_user->redirect('cardmark.php');
 

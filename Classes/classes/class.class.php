@@ -57,9 +57,21 @@ class Classs
 				free VARCHAR(1),
 				`joining_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 			)";
+			$nameTBabs=$name.'abs';
+			$sql2 = "CREATE TABLE IF NOT EXISTS $nameTBabs(
+				id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+				identity_no VARCHAR(6) NOT NULL,
+				first_name VARCHAR(15) NOT NULL,
+				last_name VARCHAR(15),
+				phone_number VARCHAR(10),
+				school_name VARCHAR(20),
+				added_by VARCHAR(20),
+				free VARCHAR(1),
+				`joining_date` timestamp NOT NULL
+			)";
 
 			$this->conn->query($sql);
-
+			$this->conn->query($sql2);
 			return $stmt;
 		}
 
@@ -100,7 +112,7 @@ class Classs
 
 	public function setHall($name,$hall)
 	{
-		$this->conn->query("UPDATE classes SET hall='$hall' WHERE class_name='$name'");
+		$this->conn->query("UPDATE classes SET hall='{$hall}' WHERE class_name='{$name}'");
 	}
 
 
