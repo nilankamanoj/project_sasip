@@ -88,8 +88,7 @@ class Student
 	{
 		try
 		{
-			/*$now = new DateTime();
-			$date = $now->format('Ymd');*/
+
 			$date = getdate();
 			$date1= $date['year'].$date['mon'].$date['mday']."d";
 
@@ -114,14 +113,6 @@ class Student
 			else{
 				return false;
 			}
-			/*if($row['num_rows']=='0'){
-			return true;
-		}
-		else{
-
-	}*/
-
-
 
 }
 catch(PDOException $e)
@@ -136,10 +127,6 @@ catch(PDOException $e)
 	{
 		$this->conn->query("UPDATE classes SET stu_count = {$count} WHERE class_name='{$class}'");
 	}
-
-
-
-
 
 }
 ?>
