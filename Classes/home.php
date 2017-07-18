@@ -69,7 +69,12 @@ if ($userRow['active']==NULL)
 
 							if ($userRow['user_level']=='3') { ?>
 								<li><a href="addStudent.php">Add Student</a></li>
+								<li><a href="classFees.php"> Class Fees </a></li>
 								<?php } ?>
+								<?php
+								if ($userRow['user_level']=='5') { ?>
+									<li><a href="cardmark.php">card mark</a></li>
+									<?php } ?>
 								<?php
 
 								if ($userRow['user_level']=='1') { ?>
@@ -141,7 +146,7 @@ if ($userRow['active']==NULL)
 										<a href="profile.php"><span class="glyphicon glyphicon-user"></span> profile</a></h1>
 										<hr />
 
-										<p class="h4">Notifications Here</p>
+										<p class="h4"><a href="viewLog.php">View My Past Activities</a></p>
 										<br></br>
 
 

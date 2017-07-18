@@ -48,6 +48,12 @@ if(isset($_POST['btn-signup']))
   else if($fname=="")	{
     $error[] = "provide first name!";
   }
+  else if(!ctype_alpha($fname))	{
+    $error[] = "provide valid first name!";
+  }
+  else if(!ctype_alpha($lname))	{
+    $error[] = "provide valid second name!";
+  }
   else if($pnum=="")	{
     $error[] = "provide a phone number !";
   }
@@ -59,6 +65,9 @@ if(isset($_POST['btn-signup']))
   }
   else if($schname=="")	{
     $error[] = "provide school Name !";
+  }
+  else if(!ctype_alpha($schname))	{
+    $error[] = "provide valid school name!";
   }
 
 
@@ -139,6 +148,7 @@ if(isset($_POST['btn-signup']))
 
               if ($userRow['user_level']=='3') { ?>
                 <li class="active"><a href="addStudent.php">Add Student</a></li>
+                <li><a href="classFees.php">class fees</a></li>
                 <?php } ?>
 
               </ul>
