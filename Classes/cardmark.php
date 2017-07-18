@@ -38,8 +38,12 @@ if(isset($_POST['btn-mark']))
     $student = new Student();
 
     $rec = $student->markCard($class,$_POST['s_id']);
+    if($rec=="alreadyGone")
+    {
+      $error[] = "This card marked Once !";
+    }
 
-    if($rec){
+    else if($rec){
 
     }
     else{
@@ -176,10 +180,11 @@ else if(isset($_POST['btn-another']))
                   if(!isset($error)){
                     if($rec['first_name']){
                       $date = getdate();
-                  		$date1= $date['year'].$date['mon']."m";
+                      $date1= $date['year'].$date['mon']."m";
 
-                      if($rec[$date1]==0){
+                      if($rec[$date1]==0 && $rec['free']!='1'){
                         print_r("Student ".$rec['first_name']." ".$rec['identity_no']." Entered to the class and not paid");
+                        echo ("<div class='alert alert-danger'><i class='glyphicon glyphicon-warning-sign'></i> &nbsp; Not Paid Fees!</div>");
                       }
                       else {
                         print_r("Student ".$rec['first_name']." ".$rec['identity_no']." Entered to the class and paid");

@@ -181,5 +181,5 @@ else if(isset($_POST['btn-another']))
                     <label>want to cancel! <a href="index.php">Cancel</a></label>
                   </form>
                 </div>
-
+                <script src="bootstrap/js/bootstrap.min.js"></script>
               </body>
