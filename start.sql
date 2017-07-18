@@ -77,3 +77,9 @@ CREATE TABLE IF NOT EXISTS `halls`(
   `id` INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `hall_name` varchar(12) NOT NULL
   )ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE `classes` CHANGE `hall` `hall` VARCHAR(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+
