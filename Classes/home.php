@@ -71,6 +71,10 @@ if ($userRow['active']==NULL)
 								<li><a href="addStudent.php">Add Student</a></li>
 								<?php } ?>
 								<?php
+								if ($userRow['user_level']=='5') { ?>
+									<li><a href="cardmark.php">card mark</a></li>
+									<?php } ?>
+								<?php
 
 								if ($userRow['user_level']=='1') { ?>
 									<li><a href="acceptUser.php">Accept User</a></li>
