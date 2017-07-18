@@ -71,6 +71,53 @@ class Student
 
 
 	}
+	public function markCard($cls,$idno)
+	{
+		try
+		{
+			/*$now = new DateTime();
+			$date = $now->format('Ymd');*/
+			$date = getdate();
+			$date1= $date['year'].$date['mon'].$date['mday']."d";
+
+			$col = $this->conn->query("SELECT {$date1} FROM {$cls}");
+
+
+			if (!$col){
+				$this->conn->query("ALTER TABLE {$cls} ADD $date1 TINYINT(1) NULL DEFAULT NULL");
+				$this->conn->query("UPDATE {$cls} SET {$date1} = 0");
+			}
+
+			$stmt=$this->conn->query("SELECT * FROM {$cls} WHERE identity_no ='{$idno}'");
+			$row = $stmt->fetch_assoc();
+
+
+			if(mysqli_num_rows($stmt)!= 0){
+				$this->conn->query("UPDATE {$cls} SET {$date1} = 1 WHERE identity_no ='{$idno}'");
+
+				return $row;
+			}
+
+			else{
+				return false;
+			}
+			/*if($row['num_rows']=='0'){
+			return true;
+		}
+		else{
+
+	}*/
+
+
+
+}
+catch(PDOException $e)
+{
+	echo $e->getMessage();
+
+}
+
+}
 
 
 }

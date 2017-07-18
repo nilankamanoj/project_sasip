@@ -1,28 +1,57 @@
 <?php
 require_once("classes/connecter.php");
-session_start();
+require_once("session.php");
 // Reset to 1
-if(isset($_POST['reset'])){unset($_SESSION['number']);}
+$auth_user = new USER();
+$auth_user_id = $_SESSION['user_session'];
+$auth_stmt = $auth_user->runQuery("SELECT * FROM users WHERE user_id=:user_id");
+$auth_stmt->execute(array(":user_id"=>$auth_user_id));
+$userRow=$auth_stmt->fetch(PDO::FETCH_ASSOC);
 
-// Set or increment session number only if button is clicked.
-if(empty($_SESSION['number'])){
-    $_SESSION['number']=1;
-}elseif(isset($_POST['next'])){
-    $_SESSION['number']++;
+
+
+if ($userRow['user_level']!='5'){
+  $auth_user->redirect('home.php');
 }
-elseif(isset($_POST['pre'])){
-    $_SESSION['number']--;
+
+elseif($_POST['cls']=="NO")	{
+  $error[] = "provide a class to Student !";
+}
+elseif (strlen($_POST['s_id'])!=6) {
+  $error[] = "The student ID length must be six";
+}
+elseif (ctype_digit($_POST['s_id'])=="") {
+  $error[] = "Input a valid ID";
+}
+else {
+  $student = new Student();
+
+  $rec = $student->markCard($_POST['cls'],$_POST['s_id']);
+
+  if($rec){
+    //print_r($rec);
+  }
+  else{
+    $error[] = "This student do not exist";
+  }
+
+  /*$con = mysqli_connect('localhost','newuser','password','dbclasses');
+  $sql = "SELECT * FROM {$_POST['cls']} WHERE identity_no ={$_POST['s_id']}";
+  $result = mysqli_query($con,$sql);
+  $record = mysqli_fetch_assoc($result);
+
+  print_r($record);*/
+
 }
 
 
-$con = mysqli_connect('localhost','newuser','password','dbclasses');
-$sql = "SELECT * FROM physics17 WHERE id = {$_SESSION['number']}";
-$result = mysqli_query($con,$sql);
-$record = mysqli_fetch_assoc($result);
 
 
-//print_r($_POST);
-echo $record["first_name"];
+
+
+
+
+
 
 //if($con){echo $result}
 
@@ -41,28 +70,59 @@ echo $record["first_name"];
 <body>
 
 
-  <div class="form-group">
-    <h1>select a class <br>
-    <select name=cls>
-      <option value="NO">  Slect Class  </option>
+    <form method="post" class="form-signin">
+      <h2 class="form-signin-heading">Student Entrance.</h2><hr />
       <?php
-      $classs=new classs();
+      if(isset($error))
+      {
+        foreach($error as $error)
+        {
+          ?>
+          <div class="alert alert-danger">
+            <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
+          </div>
+          <?php
+        }
+      }
+      else if(isset($_GET['joined']))
+      {
+        ?>
+        <div class="alert alert-info">
+          <i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully registered <a href='index.php'>Go back</a>
+        </div>
+        <?php
+      }
+      ?>
+      <div class="form-group">
+        <select name=cls>
+          <option value="NO">  Slect Class  </option>
+          <?php
+          $classs=new classs();
 
-      $array=$classs->fetchAll();
-      foreach ($array as &$class_name) {
-        echo "<option value=".$class_name.">".$class_name."</option>";
-      }?>
-    </select><br>
-    <form action="" method="POST">
-       <input type="submit" name="select" value="Select" id="btn_a" />
-    </form>
+          $array=$classs->fetchAll();
+          foreach ($array as &$class_name) {
+            echo "<option value=".$class_name.">".$class_name."</option>";
+          }?>
+        </select><br>
+       <br>
+      <div class="form-group">
+        <div class="form-group">
+          <input type="text" class="form-control" name="s_id" placeholder="Enter student ID" />
+        </div>
+        <div class="clearfix"></div><hr />
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" name="btn-signup">
+            <i class="glyphicon glyphicon-open-file"></i>&nbsp;Enter
+          </button>
+        </div>
+        <br />
+
+        <?php
+        if(!isset($error)){
+        print_r("Student ".$rec['first_name']." ".$rec['identity_no']." Entered to the class");} ?><br><br>
+
+        <label>want to cancel! <a href="index.php">Cancel</a></label>
+      </form>
   </div>
-
-  <form action="" method="POST">
-     <input class="big_b" type="submit" name="next" value="Next" id="btn_s" />
-     <input class="big_b" type="submit" name="pre" value="Previous" id="btn_p" />
-     <input type="submit" name="reset" value="Reset" id="btn_i" />
-  </form>
-
 
 </body>
