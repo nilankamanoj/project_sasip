@@ -16,7 +16,7 @@ if ($userRow['user_level']!='2')
 }
 
 
-$cls=new Classs();
+$hall=new Hall();
 $user = new USER();
 $clz="";
 
@@ -24,60 +24,35 @@ $clz="";
 if(isset($_POST['btn-signup']))
 {
 	$name = strip_tags($_POST['txt_name']);
-	$teacher=$_POST['teacher'];
-	$day=$_POST['week_day'];
-	$hour=$_POST['hour'];
-	$minit=$_POST['minit'];
-	$duration=$_POST['duration'];
-
-
-	if($day=="NO")
-	{
-		$error[] = "provide day !";
-	}
-	else if($hour=="NO")
-	{
-		$error[] = "provide hour !";
-	}
-	else if($minit=="NO")
-	{
-		$error[] = "provide minuits !";
-	}
-	else if($duration=="NO")
-	{
-		$error[] = "provide duration !";
-	}
-	else if($teacher=="NO")
-	{
-		$error[] = "provide a techer name !";
-	}
-	else if($name=="")
+    if($name=="")
 	{
 		$error[] = "provide a class name !";
 	}
 
 
-	else
-	{
+	else {
+            if($hall->checkHall($name))
+            {
+                $hall->create_hall($name);
 
-		if($cls->checkClass($name))
-		{
-			$cls->createClass($name,$day,$hour,$minit,$duration,$teacher);
-			$_SESSION['class_name'] = $name;
+                if (!$hall->checkAvailability($name)){
+                    $hall->create_hall_book($name);
+                    $hall->add_hall($name);
+                    $user->redirect('hallChange.php?joined');
+                }else{
+                    $error[]="Invalid hall name. Please look example !";
+                }
 
-            $_SESSION['class_day'] = $day;
-            $_SESSION['class_hour'] = $hour;
-            $_SESSION['class_minit'] = $minit;
-            $_SESSION['class_duration'] = $duration;
-            $_SESSION['class_teacher'] = $teacher;
-			$auth_user->redirect('selectHall.php');
-		}
 
-		else
-		{
-			$error[]="provide different class name !";
-		}
-	}
+                $_SESSION['class_name'] = $name;
+            }
+
+            else
+            {
+                $error[]="provide different hall name !";
+            }
+
+    }
 
 }
 
@@ -86,7 +61,7 @@ if(isset($_POST['btn-signup']))
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Add Class</title>
+	<title>Hall Changes</title>
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
 	<script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
@@ -110,10 +85,10 @@ if(isset($_POST['btn-signup']))
 					<li><a href="profile.php">Profile</a></li>
 					<li><a href="sign-up.php">Add user</a></li>
 					<li><a href="addStudent.php">Add Student</a></li>
-					<li class="active"><a href="addClass.php">Add Class</a></li>
+					<li ><a href="addClass.php">Add Class</a></li>
                     <?php
                     if ($userRow['user_level']=='2') { ?>
-                        <li><a href="hallChange.php">Hall Changes</a></li>
+                        <li class="active"><a href="hallChange.php">Hall Changes</a></li>
                     <?php } ?>
 
 				</ul>
@@ -136,7 +111,7 @@ if(isset($_POST['btn-signup']))
 			<div class="container">
 
 				<form method="post" class="form-signin">
-					<h2 class="form-signin-heading">Add New Class.</h2><hr />
+					<h2 class="form-signin-heading">Add New Hall.</h2><hr />
 					<?php
 					if(isset($error))
 					{
@@ -153,7 +128,7 @@ if(isset($_POST['btn-signup']))
 					{
 						?>
 						<div class="alert alert-info">
-							<i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully added class<a href='index.php'>Go back</a>
+							<i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully added hall.<a href='index.php'>Go back</a>
 						</div>
 						<?php
 					}?>
@@ -170,77 +145,12 @@ if(isset($_POST['btn-signup']))
 
 					<?php if($clz=="") {?>
 						<div class="form-group">
-							<input type="text" class="form-control" name="txt_name" placeholder="Enter Class Name" value="<?php if(isset($error)){echo $name;}?>" />
-						</div>
-						<div class="form-group">
-							<select name="week_day">
-								<option value="NO">Chose Day Below</option>
-								<option value="Sunday">Sunday</option>
-								<option value="Monday">Monday</option>
-								<option value="Tuesday">Tuesday</option>
-								<option value="Wednesday">Wednesday</option>
-								<option value="Thursday">Thursday</option>
-								<option value="Friday">Friday</option>
-								<option value="Saturday">Saturday</option>
-							</select><br>
-
-						</div>
-						<div class="form-group">
-							<select name="hour">
-								<option value="NO">Select Hour</option>
-								<option value="6">06</option>
-								<option value="7">07</option>
-								<option value="8">08</option>
-								<option value="9">09</option>
-								<option value="10">10</option>
-								<option value="11">11</option>
-								<option value="12">12</option>
-								<option value="13">13</option>
-								<option value="14">14</option>
-								<option value="15">15</option>
-								<option value="16">16</option>
-								<option value="17">17</option>
-								<option value="18">18</option>
-								<option value="19">19</option>
-								<option value="20">20</option>
-							</select>
-							<select name="minit">
-								<option value="NO">Select Minutes</option>
-								<option value="0">00</option>
-								<option value="30">30</option>
-
-							</select>
-							<select name="duration">
-								<option value="NO">Select Duration</option>
-								<option value="1">01</option>
-								<option value="2">02</option>
-								<option value="3">03</option>
-								<option value="4">04</option>
-								<option value="5">05</option>
-
-							</select><br>
-
-						</div>
-						<div class="form-group">
-							<select name="teacher">
-								<option value="NO">Select teacher</option>
-								<?php
-
-								$db=new Database();
-								$conn=$db-> dbConnection('dblogin');
-								$result = $conn->prepare("SELECT user_name FROM users WHERE user_level='1' OR user_level='4'");
-								$result->execute();
-								$array = $result->fetchAll(PDO::FETCH_COLUMN);
-								foreach ($array as &$user_name) {
-
-
-									echo "<option value=".$user_name.">".$user_name."</option>";
-
-								}
-
-								?>
-
-							</select><br>
+							<input type="text" class="form-control" name="txt_name" placeholder="Enter Hall Name" value="<?php if(isset($error)){echo $name;}?>" />
+                            <p>
+                            </p>
+                            <p>
+                                Ex:-"level_1_a"  or  "Hall Name"
+                            </p>
 						</div>
 
 						<div class="clearfix"></div><hr />

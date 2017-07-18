@@ -96,10 +96,16 @@ if ($userRow['user_level']=='1')
 										if ($userRow['user_level']=='2') { ?>
 											<li><a href="addClass.php">Add Class</a></li>
 											<?php } ?>
-											<?php
+
+                    <?php
+                    if ($userRow['user_level']=='2') { ?>
+                        <li><a href="hallChange.php">Hall Changes</a></li>
+                    <?php } ?>
+                        <?php
 											if ($userRow['user_level']=='5') { ?>
 												<li><a href="cardmark.php">card mark</a></li>
 												<?php } ?>
+
 
 										</ul>
 										<ul class="nav navbar-nav navbar-right">

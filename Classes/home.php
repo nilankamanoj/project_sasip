@@ -100,10 +100,16 @@ if ($userRow['active']==NULL)
 										<li><a href="deleteStudent.php">Remove Student</a></li>
 										<?php } ?>
 
+                                    <?php
+                                        if ($userRow['user_level']=='2') { ?>
+                                             <li><a href="addClass.php">Add Class</a></li>
+                                        <?php } ?>
+
 										<?php
 										if ($userRow['user_level']=='2') { ?>
-											<li><a href="addClass.php">Add Class</a></li>
+											<li><a href="hallChange.php">Hall Changes</a></li>
 											<?php } ?>
+
 
 										</ul>
 
