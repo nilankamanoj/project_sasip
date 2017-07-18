@@ -29,9 +29,11 @@ class Student
 		try
 		{
 
+
 			$this->conn->query("INSERT INTO {$cls}(identity_no,first_name,last_name,phone_number,school_name,added_by)
 			VALUES('{$idno}','{$fname}','{$lname}','{$pnum}','{$schname}','{$addedby}')");
-
+			$count=$this->getCount($cls);
+			$this->setCount($cls,$count);
 
 		}
 		catch(PDOException $e)
@@ -68,9 +70,28 @@ class Student
 		$idno=$row1['student_id'];
 		$cls=$row1['class'];
 		$this->conn->query("DELETE FROM {$cls} WHERE identity_no='{$idno}'");
+		$count=$this->getCount($cls);
+		$this->setCount($cls,$count);
 
 
 	}
+
+	public function getCount($class)
+	{
+
+		$stmtc=$this->conn->query("SELECT * FROM phy18");
+		$cnt = mysqli_num_rows($stmtc);
+		return $cnt;
+
+	}
+
+	public function setCount($class,$count)
+	{
+		$this->conn->query("UPDATE classes SET stu_count = {$count} WHERE class_name='{$class}'");
+	}
+
+
+
 
 
 }
