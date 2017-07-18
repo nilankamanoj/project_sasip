@@ -68,3 +68,12 @@ PRIMARY KEY (`activity_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE DATABASE dbhalls;
+
+use dbhalls;
+
+CREATE TABLE IF NOT EXISTS `halls`(
+  `id` INT(2) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `hall_name` varchar(12) NOT NULL
+  )ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
