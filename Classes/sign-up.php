@@ -105,6 +105,7 @@ if(isset($_POST['btn-signup']))
 						<li class="active"><a href="sign-up.php">Add user</a></li>
 						<li><a href="addStudent.php">Add Student</a></li>
 						<li><a href="addClass.php">Add Class</a></li>
+                        <li><a href="hallChange.php">Hall Changes</a></li>
 						<?php } ?>
 
 

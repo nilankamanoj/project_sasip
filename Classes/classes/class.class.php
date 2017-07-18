@@ -100,7 +100,7 @@ class Classs
 
 	public function setHall($name,$hall)
 	{
-		$this->conn->query("UPDATE classes SET hall='{$hall}' WHERE class_name='{$name}'");
+		$this->conn->query("UPDATE classes SET hall='$hall' WHERE class_name='$name'");
 	}
 
 

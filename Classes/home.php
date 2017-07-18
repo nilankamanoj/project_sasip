@@ -19,7 +19,10 @@ if ($userRow['user_level']=='1')
 {
 	$SystemUser=Owner::getInstance();
 }
-
+if ($userRow['active']==NULL)
+{
+	$auth_user->redirect("changePass.php?activate");
+}
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -92,10 +95,16 @@ if ($userRow['user_level']=='1')
 										<li><a href="deleteStudent.php">Remove Student</a></li>
 										<?php } ?>
 
+                                    <?php
+                                        if ($userRow['user_level']=='2') { ?>
+                                             <li><a href="addClass.php">Add Class</a></li>
+                                        <?php } ?>
+
 										<?php
 										if ($userRow['user_level']=='2') { ?>
-											<li><a href="addClass.php">Add Class</a></li>
+											<li><a href="hallChange.php">Hall Changes</a></li>
 											<?php } ?>
+
 
 										</ul>
 
@@ -115,7 +124,7 @@ if ($userRow['user_level']=='1')
 										</div><!--/.nav-collapse -->
 									</div>
 								</nav>
-						
+
 
 
 							<div class="clearfix"></div>
