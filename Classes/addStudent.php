@@ -143,6 +143,7 @@ if(isset($_POST['btn-signup']))
 
               if ($userRow['user_level']=='3') { ?>
                 <li class="active"><a href="addStudent.php">Add Student</a></li>
+                <li><a href="classFees.php">class fees</a></li>
                 <?php } ?>
 
               </ul>

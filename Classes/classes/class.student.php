@@ -126,8 +126,6 @@ public function addFee($cls,$idno)
 {
 	try
 	{
-		/*$now = new DateTime();
-		$date = $now->format('Ymd');*/
 		$date = getdate();
 		$date1= $date['year'].$date['mon']."m";
 
@@ -152,14 +150,6 @@ public function addFee($cls,$idno)
 		else{
 			return false;
 		}
-		/*if($row['num_rows']=='0'){
-		return true;
-	}
-	else{
-
-}*/
-
-
 
 }
 catch(PDOException $e)

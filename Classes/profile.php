@@ -64,6 +64,7 @@ if ($userRow['user_level']=='1')
 
 							if ($userRow['user_level']=='3') { ?>
 								<li><a href="addStudent.php">Add Student</a></li>
+								<li><a href="classFees.php">class fees</a></li>
 								<?php } ?>
 								<?php
 

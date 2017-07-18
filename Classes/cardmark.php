@@ -40,7 +40,7 @@ if(isset($_POST['btn-mark']))
     $rec = $student->markCard($class,$_POST['s_id']);
 
     if($rec){
-      
+
     }
     else{
       $error[] = "This student do not exist";
@@ -67,7 +67,7 @@ else if(isset($_POST['btn-another']))
   <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
   <script type="text/javascript" src="jquery-1.11.3-jquery.min.js"></script>
   <link rel="stylesheet" href="style.css" type="text/css"  />
-  <title>welcome - <?php print($userRow['user_email']); ?></title>
+  <title>card mark</title>
 </head>
 <body>
 
