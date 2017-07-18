@@ -62,7 +62,7 @@ if(isset($_POST['btn-signup']))
 
 		if($cls->checkClass($name))
 		{
-			$cls->createClass($name,$day,$hour,$minit,$duration,$teacher);
+			//$cls->createClass($name,$day,$hour,$minit,$duration,$teacher);
 			$_SESSION['class_name'] = $name;
 
             $_SESSION['class_day'] = $day;

@@ -38,29 +38,29 @@ $arrayHall=$hall->fetchHall();
 
 if(isset($_POST['btn-delete']))
 {
-	$cls->deleteClass($clsname);
+	//$cls->deleteClass($clsname);
 	$_SESSION['class_name']="";
 	$clsname="";
 	$auth_user->redirect("addClass.php?cancelled");
 }
 if(isset($_POST['btn-check']))
 {
-	$hall=$_POST['hall'];
+	$hall=strip_tags($_POST['halls']);
 	if($hall=="NO"){
 		$error[] = "provide hall !";
 	}
 	else{
-		$cls->setHall($clsname,$hall);
-        //$cls->createClass($_SESSION['class_name'],$_SESSION['class_day'],$_SESSION['class_hour'],$_SESSION['class_minit'],$_SESSION['class_duration'],$_SESSION['class_teacher']);
-		$_SESSION['class_name']="";
+            $cls->createClass($_SESSION['class_name'], $_SESSION['class_day'], $_SESSION['class_hour'], $_SESSION['class_minit'], $_SESSION['class_duration'], $_SESSION['class_teacher']);
+            $cls->setHall($clsname, $hall);
+            $_SESSION['class_name'] = "";
 
-        /*$_SESSION['class_day'] = "";
-        $_SESSION['class_hour'] = "";
-        $_SESSION['class_minit'] = "";
-        $_SESSION['class_duration'] = "";
-        $_SESSION['class_teacher'] = "";*/
-		$clsname="";
-		$auth_user->redirect("addClass.php?joined");
+            $_SESSION['class_day'] = "";
+            $_SESSION['class_hour'] = "";
+            $_SESSION['class_minit'] = "";
+            $_SESSION['class_duration'] = "";
+            $_SESSION['class_teacher'] = "";
+            $clsname = "";
+            $auth_user->redirect("addClass.php?joined");
 	}
 }
 if(isset($_POST['btn-cancel']))
@@ -292,11 +292,11 @@ if(isset($_POST['btn-book']))
 
 
 												else{?>
-													<p><font color=#505fff >Class Name :</font> <?php print($row['class_name']) ;?></p>
+													<p><font color=#505fff >Class Name :</font> <?php echo $_SESSION['class_name'];/*print($row['class_name']) ;*/?></p>
 													<?php } ?>
 													<br>
 													<div class="form-group">
-														<select name="hall">
+														<select name="halls">
 															<option value="NO">Chose Hall Below</option>
 
                                                             <?php foreach ($arrayHall as $hall_name):?>
