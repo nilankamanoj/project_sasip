@@ -175,7 +175,15 @@ else if(isset($_POST['btn-another']))
                   <?php
                   if(!isset($error)){
                     if($rec['first_name']){
-                      print_r("Student ".$rec['first_name']." ".$rec['identity_no']." Entered to the class");}} ?><br><br>
+                      $date = getdate();
+                  		$date1= $date['year'].$date['mon']."m";
+
+                      if($rec[$date1]==0){
+                        print_r("Student ".$rec['first_name']." ".$rec['identity_no']." Entered to the class and not paid");
+                      }
+                      else {
+                        print_r("Student ".$rec['first_name']." ".$rec['identity_no']." Entered to the class and paid");
+                      }}} ?><br><br>
 
                       <label>want to cancel! <a href="index.php">Cancel</a></label>
                     </form>
