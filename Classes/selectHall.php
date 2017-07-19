@@ -31,25 +31,59 @@ $cls=new Classs();
 $user = new USER();
 $array=$cls->fetchTeacher($userRow['user_name']);
 $row=$cls->fetchClass($clsname);
+
+$hall=new Hall();
+$arrayHalls=$hall->fetchHall();
+$class_day=$_SESSION['class_day'];
+$class_time_hour=$_SESSION['class_hour'];
+$class_time_minit=$_SESSION['class_minit'];
+$duration=$_SESSION['class_duration'];
+echo "ok..";
+
+foreach ($arrayHalls as $hall_array){
+    echo "ok..";
+    $hall_arrayStr[]=strval(".$hall_array->hall_name");
+}
+$hall1=new Hall();
+foreach ($hall_arrayStr as $hall_array1){
+    echo "ok..";
+    $check=true;
+    $check=$hall1->check_hall_availability("$hall_array1","$class_day","$class_time_hour","$class_time_minit","$duration");
+    echo "ok..";
+    if ($check==(true)){
+        $arrayHall[]=$hall_array1;
+    }
+}
+
+
+
 if(isset($_POST['btn-delete']))
 {
-	$cls->deleteClass($clsname);
+	//$cls->deleteClass($clsname);
 	$_SESSION['class_name']="";
 	$clsname="";
 	$auth_user->redirect("addClass.php?cancelled");
 }
 if(isset($_POST['btn-check']))
 {
-	$hall=$_POST['hall'];
-	if($hall=="NO"){
+	$hallS=strip_tags($_POST['halls']);
+	if($hallS=="NO"){
 		$error[] = "provide hall !";
 	}
 	else{
+        $cls->createClass($_SESSION['class_name'], $_SESSION['class_day'], $_SESSION['class_hour'], $_SESSION['class_minit'], $_SESSION['class_duration'], $_SESSION['class_teacher']);
+        $cls->setHall($clsname, $hallS);
+        $hall->insert_hall($hallS,$_SESSION['class_name'],$_SESSION['class_day'],$_SESSION['class_hour'],$_SESSION['class_minit'],$_SESSION['class_duration'],$_SESSION['class_teacher']);
 
-		$cls->setHall($clsname,$hall);
-		$_SESSION['class_name']="";
-		$clsname="";
-		$auth_user->redirect("addClass.php?joined");
+        $_SESSION['class_name'] = "";
+
+        $_SESSION['class_day'] = "";
+        $_SESSION['class_hour'] = "";
+        $_SESSION['class_minit'] = "";
+        $_SESSION['class_duration'] = "";
+        $_SESSION['class_teacher'] = "";
+        $clsname = "";
+        $auth_user->redirect("addClass.php?joined");
 	}
 }
 if(isset($_POST['btn-cancel']))
@@ -137,6 +171,10 @@ if(isset($_POST['btn-book']))
 									<li class='active'><a href="selectHall.php">Book A Hall</a></li>
 									<li><a href="deleteStudent.php">Remove Student</a></li>
 									<?php } ?>
+                    <?php
+                    if ($userRow['user_level']=='2') { ?>
+                        <li><a href="hallChange.php">Hall Changes</a></li>
+                    <?php } ?>
 
 
 								</ul>
@@ -195,7 +233,6 @@ if(isset($_POST['btn-book']))
 														<option value="NO">  Select Class  </option>
 														<?php
 														$classs=new Classs();
-
 
 														foreach ($array as &$class_name) {
 															echo "<option value=".$class_name.">".$class_name."</option>";
@@ -274,22 +311,20 @@ if(isset($_POST['btn-book']))
 
 												</div>
 
-												<?php } else{?>
-													<p><font color=#505fff >Class Name :</font> <?php print($row['class_name']) ;?></p>
+												<?php }
+
+
+												else{?>
+													<p><font color=#505fff >Class Name :</font> <?php echo $_SESSION['class_name'];/*print($row['class_name']) ;*/?></p>
 													<?php } ?>
 													<br>
 													<div class="form-group">
-														<select name="hall">
+														<select name="halls">
 															<option value="NO">Chose Hall Below</option>
-															<option value="11">level-1-a</option>
-															<option value="12">level-1-b</option>
-															<option value="13">level-1-c</option>
-															<option value="14">level-1-d</option>
-															<option value="21">level-2-a</option>
-															<option value="22">level-2-b</option>
-															<option value="23">level-2-c</option>
 
-
+                                                            <?php foreach ($arrayHall as $hall_name):?>
+                                                                <option value="<?php echo $hall_name;?>"><?php echo $hall_name?></option>
+                                                            <?php endforeach;?>
 
 														</select><br>
 
@@ -303,8 +338,11 @@ if(isset($_POST['btn-book']))
 
 															<button type="submit" class="" name="btn-cancel">
 
-																<i class="glyphicon glyphicon-open-file"></i>&nbsp;Cancell Booking
-																<?php }else{ ?>
+																<i class="glyphicon glyphicon-open-file"></i>&nbsp;Cancel Booking
+																<?php }
+
+
+																else{ ?>
 																	<div class="clearfix"></div><hr />
 																	<div class="form-group">
 																		<button type="submit" class="btn btn-primary" name="btn-check">
