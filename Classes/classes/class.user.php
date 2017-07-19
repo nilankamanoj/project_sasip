@@ -8,10 +8,12 @@ class USER
 	private $conn;
 	private $u__name="default";
 	private $sysuser="";
+	private $dbase;
 
 	public function __construct()
 	{
 		$database = new Database();
+		$this->dbase=$database;
 		$db = $database->dbConnection("dblogin");
 		$this->conn = $db;
 
@@ -68,10 +70,16 @@ class USER
 				{
 					$_SESSION['user_session'] = $userRow['user_id'];
 					$this->level=$userRow['user_level'];
+					$rec=$this->dbase->getConn("dbsyslog");
+					$rec->query("INSERT INTO syslog(user_name,activity_description) VALUES('{$userRow['user_name']}','logged in')");
+					$rec->close();
 					return true;
 				}
 				else
 				{
+					$rec=$this->dbase->getConn("dbsyslog");
+					$rec->query("INSERT INTO syslog(user_name,activity_description) VALUES('{$userRow['user_name']}','invalid password used')");
+					$rec->close();
 					return false;
 				}
 			}
@@ -131,6 +139,12 @@ class USER
 				$stmt->bindparam(":upass", $new_password);
 
 				$stmt->execute();
+				$stmt2 = $this->conn->prepare("UPDATE users SET active = '1' WHERE user_name=:uname");
+				$stmt2->bindparam(":uname", $uname);
+				$stmt2->execute();
+				$rec=$this->dbase->getConn("dbsyslog");
+				$rec->query("INSERT INTO syslog(user_name,activity_description) VALUES('{$uname}','password changed')");
+				$rec->close();
 
 				//echo "changed";
 
@@ -148,6 +162,19 @@ class USER
 		}
 	}
 
+public function fetchLog($uname)
+{
+
+	$db = $this->dbase->dbConnection("dbsyslog");
+
+	$result =$db->prepare("SELECT * FROM syslog WHERE user_name='{$uname}'");
+
+
+	$result->execute();
+	echo "1";
+	$array = $result->fetchAll(PDO::FETCH_ASSOC);
+	return $array;
+}
 
 
 

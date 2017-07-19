@@ -29,9 +29,11 @@ class Student
 		try
 		{
 
+
 			$this->conn->query("INSERT INTO {$cls}(identity_no,first_name,last_name,phone_number,school_name,added_by)
 			VALUES('{$idno}','{$fname}','{$lname}','{$pnum}','{$schname}','{$addedby}')");
-
+			$count=$this->getCount($cls);
+			$this->setCount($cls,$count);
 
 		}
 		catch(PDOException $e)
@@ -68,7 +70,159 @@ class Student
 		$idno=$row1['student_id'];
 		$cls=$row1['class'];
 		$this->conn->query("DELETE FROM {$cls} WHERE identity_no='{$idno}'");
+		$this->loadAbs($cls);
+		$count=$this->getCount($cls);
+		$this->setCount($cls,$count);
 
+
+	}
+
+	public function getCount($class)
+	{
+
+		$stmtc=$this->conn->query("SELECT * FROM phy18");
+		$cnt = mysqli_num_rows($stmtc);
+		return $cnt;
+
+	}
+	public function markCard($cls,$idno)
+	{
+		try
+		{
+
+			$date = getdate();
+			$date1= $date['year'].$date['mon'].$date['mday']."d";
+
+			$col = $this->conn->query("SELECT {$date1} FROM {$cls}");
+
+
+			if (!$col){
+				$this->conn->query("ALTER TABLE {$cls} ADD $date1 TINYINT(1) NULL DEFAULT NULL");
+				$this->conn->query("UPDATE {$cls} SET {$date1} = 0");
+			}
+
+			$stmt=$this->conn->query("SELECT * FROM {$cls} WHERE identity_no ='{$idno}'");
+			$row = $stmt->fetch_assoc();
+
+
+			if(mysqli_num_rows($stmt)!= 0){
+				if($row[$date1] == 1){
+					return "alreadyGone";
+				}
+				else {
+					$this->conn->query("UPDATE {$cls} SET {$date1} = 1 WHERE identity_no ='{$idno}'");
+
+
+					return $row;
+				}
+			}
+
+			else{
+				return false;
+			}
+
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
+
+		}
+
+	}
+	public function addFee($cls,$idno)
+	{
+		try
+		{
+			$date = getdate();
+			$date1= $date['year'].$date['mon']."m";
+
+			$col = $this->conn->query("SELECT {$date1} FROM {$cls}");
+
+
+			if (!$col){
+				$this->conn->query("ALTER TABLE {$cls} ADD $date1 TINYINT(1) NULL DEFAULT NULL");
+				$this->conn->query("UPDATE {$cls} SET {$date1} = 0");
+			}
+
+			$stmt=$this->conn->query("SELECT * FROM {$cls} WHERE identity_no ='{$idno}'");
+			$row = $stmt->fetch_assoc();
+
+
+			if(mysqli_num_rows($stmt)!= 0){
+				$this->conn->query("UPDATE {$cls} SET {$date1} = 1 WHERE identity_no ='{$idno}'");
+
+				return $row;
+			}
+
+			else{
+				return false;
+			}
+
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
+
+		}
+
+	}
+
+
+	public function setCount($class,$count)
+	{
+		$this->conn->query("UPDATE classes SET stu_count = {$count} WHERE class_name='{$class}'");
+	}
+
+	public function checkAbs($idno,$cls)
+	{
+		$stmt=$this->conn->query("SELECT * FROM {$cls} WHERE identity_no ='{$idno}'");
+		$row = $stmt->fetch_assoc();
+
+		foreach (array_keys($row) as $key) {
+
+		    if($key[strlen($key)-1]=='d'){
+		      $dayArray[]=$key;
+		    }
+
+
+		}
+		//print_r($dayArray);
+		if(sizeof($dayArray)>4){
+		  $i=0;
+		  foreach (array_reverse($dayArray) as $key) {
+		    if($row[$key]==0){
+		      $i=$i+1;
+		    }
+		    if($i==4){
+		      return true;
+		      break;
+		    }
+		    else if($row[$key]==1){
+		      print false;
+		      break;
+		    }
+
+		  }
+		}
+		else {
+			return false;
+		}
+
+	}
+
+	public function loadAbs($class)
+	{
+		$abs=$class.'abs';
+		$stmt=$this->conn->query("SELECT * FROM {$class}");
+
+		while ($row = $stmt->fetch_assoc()) {
+			if($this->checkAbs($row['identity_no'],$class)){
+				$id=$row['identity_no'];
+				$sql3="INSERT INTO {$abs} (identity_no,first_name,last_name,phone_number,school_name,added_by,free,joining_date) SELECT identity_no,first_name,last_name,phone_number,school_name,added_by,free,joining_date FROM {$class} WHERE identity_no='{$id}'";
+				$this->conn->query($sql3);
+				$this->conn->query("DELETE FROM {$class} WHERE identity_no='{$id}'");
+			}
+		}
 
 	}
 

@@ -63,7 +63,10 @@ if(isset($_POST['btn-signup']))
 
 <body>
 
-
+  <?php
+  if(!isset($_GET['activate']))
+  {
+    ?>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -143,12 +146,22 @@ if(isset($_POST['btn-signup']))
                     </div><!--/.nav-collapse -->
                   </div>
                 </nav>
+              <?php } ?>
                 <div class="signin-form">
 
                   <div class="container">
 
                     <form method="post" class="form-signin">
                       <h2 class="form-signin-heading">Change Password.</h2><hr />
+                      <?php
+                      if(isset($_GET['activate']))
+                      {
+                        ?>
+                        <div class="alert alert-info">
+                          <i class="glyphicon glyphicon-log-in"></i> &nbsp; You Should Change Password For First Time Login!                        </div>
+                        <?php
+                      }
+                      ?>
                       <?php
                       if(isset($error))
                       {
@@ -189,6 +202,7 @@ if(isset($_POST['btn-signup']))
                       </div>
                       <br />
                       <label>want to cancel! <a href="index.php">Cancel</a></label>
+                      
                     </form>
                   </div>
                 </div>
