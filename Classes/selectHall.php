@@ -33,6 +33,27 @@ $array=$cls->fetchTeacher($userRow['user_name']);
 $row=$cls->fetchClass($clsname);
 
 $hall=new Hall();
+$arrayHalls=$hall->fetchHall();
+$class_day=$_SESSION['class_day'];
+$class_time_hour=$_SESSION['class_hour'];
+$class_time_minit=$_SESSION['class_minit'];
+$duration=$_SESSION['class_duration'];
+echo "ok..";
+
+foreach ($arrayHalls as $hall_array){
+    echo "ok..";
+    $hall_arrayStr[]=strval(".$hall_array->hall_name");
+}
+$hall1=new Hall();
+foreach ($hall_arrayStr as $hall_array1){
+    echo "ok..";
+    $check=true;
+    $check=$hall1->check_hall_availability("$hall_array1","$class_day","$class_time_hour","$class_time_minit","$duration");
+    echo "ok..";
+    if ($check==(true)){
+        $arrayHall[]=$hall_array1;
+    }
+}
 $arrayHall=$hall->fetchHall();
 
 
@@ -45,6 +66,24 @@ if(isset($_POST['btn-delete']))
 }
 if(isset($_POST['btn-check']))
 {
+	$hallS=strip_tags($_POST['halls']);
+	if($hallS=="NO"){
+		$error[] = "provide hall !";
+	}
+	else{
+        $cls->createClass($_SESSION['class_name'], $_SESSION['class_day'], $_SESSION['class_hour'], $_SESSION['class_minit'], $_SESSION['class_duration'], $_SESSION['class_teacher']);
+        $cls->setHall($clsname, $hallS);
+        $hall->insert_hall($hallS,$_SESSION['class_name'],$_SESSION['class_day'],$_SESSION['class_hour'],$_SESSION['class_minit'],$_SESSION['class_duration'],$_SESSION['class_teacher']);
+
+        $_SESSION['class_name'] = "";
+
+        $_SESSION['class_day'] = "";
+        $_SESSION['class_hour'] = "";
+        $_SESSION['class_minit'] = "";
+        $_SESSION['class_duration'] = "";
+        $_SESSION['class_teacher'] = "";
+        $clsname = "";
+        $auth_user->redirect("addClass.php?joined");
 	$hall=strip_tags($_POST['halls']);
 	if($hall=="NO"){
 		$error[] = "provide hall !";
@@ -61,6 +100,7 @@ if(isset($_POST['btn-check']))
             $_SESSION['class_teacher'] = "";
             $clsname = "";
             $auth_user->redirect("addClass.php?joined");
+
 	}
 }
 if(isset($_POST['btn-cancel']))
@@ -300,7 +340,11 @@ if(isset($_POST['btn-book']))
 															<option value="NO">Chose Hall Below</option>
 
                                                             <?php foreach ($arrayHall as $hall_name):?>
+
+                                                                <option value="<?php echo $hall_name;?>"><?php echo $hall_name?></option>
+
                                                                 <option value="<?php echo $hall_name->hall_name;?>"><?php echo $hall_name->hall_name;?></option>
+
                                                             <?php endforeach;?>
 
 														</select><br>
