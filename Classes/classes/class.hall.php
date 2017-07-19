@@ -97,6 +97,47 @@ class Hall
 
         return $results;
     }
+    public function insert_hall($hall_name,$class_name,$class_day,$class_time_hour,$class_time_minit,$duration,$teacher_name){
+
+        $query = "INSERT INTO $hall_name (class_name,class_day,class_time_hour,class_time_minit,duration,teacher_name)
+                VALUES ('$class_name','$class_day','$class_time_hour','$class_time_minit','$duration','$teacher_name')";
+
+       $this->conn->query($query);
+
+    }
+
+    public function check_hall_availability($hall_name,$class_day,$class_time_hour,$class_time_minit,$duration){
+
+        $query = "SELECT * FROM {$hall_name} WHERE class_day='$class_day'";
+
+        $result = $this->conn->query($query);
+        while ($obj = $result->fetch_object()) {
+            $results[] = $obj;
+        }
+        $final_result=(true);
+        foreach ($results as $row) {
+            $hour = intval($row->class_time_hour);
+            $min = intval($row->class_time_minit);
+            $dur = intval($row->duration);
+            $end = $hour + $dur;
+
+            if ($class_time_hour <= $end && $class_time_hour >= $hour) {
+                if($min=0 && $class_time_minit=='00' ){
+                        $final_result = (false);
+
+                }
+                elseif ($class_time_minit != '30') {
+                    $final_result = (false);
+                } else {
+                    $final_result = (false);
+
+                }
+
+            }
+
+        }
+        return $final_result;
+    }
 
 }
 ?>
